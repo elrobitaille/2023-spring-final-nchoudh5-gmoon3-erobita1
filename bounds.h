@@ -18,18 +18,18 @@ public:
   ~Bounds();
 
   // Define setters and getters for the fields
-  double get_xmin() const;
-  double get_xmax() const;
-  double get_ymin() const;
-  double get_ymax() const;
+  double get_xmin() const {return xmin;};
+  double get_xmax() const {return xmax;};
+  double get_ymin() const {return ymin;};
+  double get_ymax() const {return ymax;};
 
   void set_xmin(double xmin);
   void set_xmax(double xmax);
   void set_ymin(double ymin);
   void set_ymax(double ymax);
 
-  double get_width() const;
-  double get_height() const;
+  double get_width() const {return xmax - xmin;};
+  double get_height() const {return ymax - ymin;};
 
   double set_width(double width);
   double set_height(double height);
