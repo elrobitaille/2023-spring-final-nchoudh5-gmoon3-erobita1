@@ -41,4 +41,5 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       plot.set_width(width);
       plot.set_height(height);
   }
+  }
 }
