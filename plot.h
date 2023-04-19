@@ -17,6 +17,8 @@ private:
   Plot(const Plot &);
   Plot &operator=(const Plot &);
   Bound bound;
+  int width;
+  int height;
 
 public:
   Plot();
@@ -25,6 +27,10 @@ public:
   // TODO: add member functions to set and modify plot data
   void set_bound(Bound bound){this->bound = bound;}
   Bound get_bound() const {return bound;}
+  void set_width(int width){this->width = width;}
+  int get_width() const {return width;}
+  void set_height(int height){this->height = height;}
+  int get_height() const {return height;}
   
 };
 

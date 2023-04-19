@@ -24,9 +24,21 @@ void Reader::read_input(std::istream &in, Plot &plot) {
     std::string command;
     iss >> command;
     if (command == "Plot") {
-      int x_min, x_max, y_min, y_max;
+      double x_min, x_max, y_min, y_max;
       iss >> x_min >> x_max >> y_min >> y_max;
+      if (x_min >= x_max || y_min >= y_max) {
+        printf("Invalid bounds");
+        //throw PlotException("Invalid bounds");
+      }
       plot.set_bound(Bound(x_min, x_max, y_min, y_max));
-    }
+
+      int width, height;
+      iss >> width >> height;
+      if (width <= 0 || height <= 0) {
+        printf("Invalid image size");
+        //throw PlotException("Invalid image size");
+      }
+      plot.set_width(width);
+      plot.set_height(height);
   }
 }
