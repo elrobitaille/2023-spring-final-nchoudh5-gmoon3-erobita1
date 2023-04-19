@@ -27,19 +27,26 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       double x_min, x_max, y_min, y_max;
       iss >> x_min >> x_max >> y_min >> y_max;
       if (x_min >= x_max || y_min >= y_max) {
-        printf("Invalid bounds");
-        //throw PlotException("Invalid bounds");
+        throw PlotException("Invalid bounds");
       }
       plot.set_bound(Bound(x_min, x_max, y_min, y_max));
 
       int width, height;
       iss >> width >> height;
       if (width <= 0 || height <= 0) {
-        printf("Invalid image size");
-        //throw PlotException("Invalid image size");
+        throw PlotException("Invalid image size");
       }
       plot.set_width(width);
       plot.set_height(height);
-  }
+    } 
+    else if (command == "Color") {
+      std::string fn_name;
+      int r, g, b;
+      iss >> fn_name >> r >> g >> b;
+      if (r > 255 || g > 255 || b > 255) {
+        throw PlotException("Invalid color");
+      }
+      Color color(r, g, b);
+    } 
   }
 }

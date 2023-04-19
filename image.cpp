@@ -28,14 +28,31 @@ Image::Image(int width, int height)
   , m_height(height)
   , m_pixels(new Color[width * height]) {
   // TODO: initialize pixel data
+  //initialize pixel data to black 
+  for (int i = 0; i < width * height; i++) {
+    m_pixels[i] = Color(0, 0, 0);
+  }
 }
 
 Image::~Image() {
   // TODO: deallocate memory
+  delete[] m_pixels;
   
 }
 
 // TODO: implement member functions
+void Image::set_pixel(int x, int y, const Color &color) {
+  //set pixel at (x, y) to color
+  m_pixels[y * m_width + x] = color;
+}
+
+Color Image::get_pixel(int x, int y) const {
+  if (x < 0 || x >= m_width || y < 0 || y >= m_height) {
+    throw PlotException("Invalid pixel coordinates");
+  }
+  //get pixel at (x, y)
+  return m_pixels[y * m_width + x];
+}
 
 void Image::write_png(std::ostream &out)
 {
@@ -59,3 +76,4 @@ void Image::write_png(std::ostream &out)
     throw PlotException("Error converting writing image data as PNG");
   }
 }
+
