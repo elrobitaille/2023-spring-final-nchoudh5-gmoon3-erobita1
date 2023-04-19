@@ -32,6 +32,7 @@ Image::Image(int width, int height)
 
 Image::~Image() {
   // TODO: deallocate memory
+  
 }
 
 // TODO: implement member functions

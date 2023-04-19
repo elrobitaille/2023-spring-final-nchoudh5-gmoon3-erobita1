@@ -10,8 +10,6 @@ private:
   double ymax;
 
 public:
-  // TODO: add member functions
-
   // Define default and non-default constructor, and destructor 
   Bounds();
   Bounds(double xmin, double xmax, double ymin, double ymax);

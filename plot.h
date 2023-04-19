@@ -16,12 +16,16 @@ private:
   // value semantics are prohibited
   Plot(const Plot &);
   Plot &operator=(const Plot &);
+  Bound bound;
 
 public:
   Plot();
   ~Plot();
 
   // TODO: add member functions to set and modify plot data
+  void set_bound(Bound bound){this->bound = bound;}
+  Bound get_bound() const {return bound;}
+  
 };
 
 #endif // PLOT_H
