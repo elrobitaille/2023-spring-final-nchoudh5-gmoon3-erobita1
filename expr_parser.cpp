@@ -13,7 +13,36 @@ ExprParser::~ExprParser() {
 }
 
 Expr* parsePfxExpr(std::deque<std::string> &tokens) {
+  if (tokens.empty()) {
+    throw PlotException("Empty");
+  }
 
+  std::string n = tokens.front();
+  tokens.pop_front();
+
+  if (n == "x" || n == "pi" ) { //n is natural number) 
+    
+  } else if (n == "(") {
+    if (tokens.empty()) {
+      throw PlotException("Empty");
+    }
+
+    n = tokens.front();
+    tokens.pop_front();
+
+    if (n != "sin" && n != "cos" && n != "+" && n != "-" && n != "*" && n != "/") {
+      throw PlotException("Invalid function name");
+    }
+
+    while (tokens.front() != ")") {
+      Expr *arg = parsePfxExpr(tokens);
+    }
+
+    //return result;
+
+  } else {
+    throw PlotException("Unexpected token");
+  }
 }
 
 
@@ -31,7 +60,10 @@ Expr *ExprParser::parse(std::istream &in) {
     tokens.push_back(token);
   }
 
-  //return parsedExpr;
+  std::deque<std::string> tokenDeque(tokens.begin(), tokens.end());
+  Expr *parsedExpr = parsePfxExpr(tokenDeque);
+
+  return parsedExpr;
 
 }
 
