@@ -28,7 +28,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
     iss >> command;
     if (command == "Plot") {
       double x_min, x_max, y_min, y_max;
-      iss >> x_min >> x_max >> y_min >> y_max;
+      iss >> x_min >> y_min >> x_max >> y_max;
       if (x_min >= x_max || y_min >= y_max) {
         throw PlotException("Invalid bounds");
       }
