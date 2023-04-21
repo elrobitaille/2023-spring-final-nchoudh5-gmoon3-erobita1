@@ -32,7 +32,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       if (x_min >= x_max || y_min >= y_max) {
         throw PlotException("Invalid bounds");
       }
-      plot.set_bound(Bound(x_min, x_max, y_min, y_max));
+      plot.set_bound(Bounds(x_min, x_max, y_min, y_max));
 
       int width, height;
       iss >> width >> height;
@@ -57,8 +57,10 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       iss >> fn_name;
       getline(iss, expr);
       expr = expr.substr(1);
-      ExprParser parser(expr);
-      plot.add_function(fn_name, parser.parse());
+      std::istringstream expr_stream(expr);
+      ExprParser parser;
+      Function* function = new Function(fn_name, parser.parse(expr_stream));
+      plot.add_function(function);
     } 
     else {
       throw PlotException("Invalid command");
