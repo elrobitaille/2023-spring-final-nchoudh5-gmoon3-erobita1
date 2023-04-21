@@ -34,7 +34,7 @@ public:
   AddExpr() {}
 
   // Destructor
-  virtual ~AddExpr();
+  virtual ~AddExpr() {}
 
   // Evaluation function
   virtual double eval(double x) const;
@@ -46,7 +46,7 @@ public:
   SubExpr() {}
 
   // Destructor
-  virtual ~SubExpr();
+  virtual ~SubExpr() {}
 
   // Evaluation function
   virtual double eval(double x) const;
@@ -58,7 +58,7 @@ public:
   MultExpr() {}
 
   // Destructor
-  virtual ~MultExpr();
+  virtual ~MultExpr() {}
 
   // Evaluation function
   virtual double eval(double x) const;
@@ -70,7 +70,7 @@ public:
   DivExpr() {}
 
   // Destructor
-  virtual ~DivExpr();
+  virtual ~DivExpr() {}
 
   // Evaluation function
   virtual double eval(double x) const;
