@@ -67,15 +67,22 @@ double LiteralNumber::eval(double x) const {
 }
 
 double Sin::eval(double x) const {
-    if (numChildren() != 1) {
-        throw PlotException("Sin expression requires exactly one operand");
-    }
-    return sin(getChild(0)->eval(x));
+  return std::sin(m_arg->eval(x));
+}
+void Sin::addChild(Expr* expr) {
+  if (m_arg != nullptr) {
+    throw PlotException("Sin only takes one argument");
+  }
+  m_arg = expr;
 }
 
 double Cos::eval(double x) const {
-    if (numChildren() != 1) {
-        throw PlotException("Cos expression requires exactly one operand");
-    }
-    return cos(getChild(0)->eval(x));
+  return std::cos(m_arg->eval(x));
 }
+void Cos::addChild(Expr* expr) {
+  if (m_arg != nullptr) {
+    throw PlotException("Cos only takes one argument");
+  }
+  m_arg = expr;
+}
+

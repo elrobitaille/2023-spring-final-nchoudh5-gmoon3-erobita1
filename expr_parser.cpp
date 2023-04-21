@@ -75,9 +75,13 @@ Expr* parsePfxExpr(std::deque<std::string>& tokens) {
       result = new DivExpr();
     }
 
-    while (tokens.front() != ")") {
+    while (!tokens.empty() && tokens.front() != ")") {
       Expr* arg = parsePfxExpr(tokens);
       result->addChild(arg);
+    }
+
+    if (tokens.empty()) {
+      throw PlotException("Missing right parenthesis");
     }
 
     tokens.pop_front(); // remove the right parenthesis token

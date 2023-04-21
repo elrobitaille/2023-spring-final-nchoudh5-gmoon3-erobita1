@@ -1,6 +1,7 @@
 #ifndef EXPR_H
 #define EXPR_H
 
+#include "exception.h"
 #include <cmath>
 #include <vector>
 
@@ -117,6 +118,8 @@ public:
   }
 
   virtual double eval(double x) const;
+  
+  virtual void addChild(Expr* expr);
 };
 
 // Cos class
@@ -132,6 +135,8 @@ public:
   }
 
   virtual double eval(double x) const;
+
+  virtual void addChild(Expr* expr);
 };
 
 #endif // EXPR_H
