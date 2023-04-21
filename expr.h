@@ -7,9 +7,10 @@
 // Base expression class
 class Expr {
 private:
-  // TODO: field(s) to store links to child Expr nodes
-  // value semantics are prohibited
-  std::vector<Expr*> children; // links to child Expr nodes
+  // Field to store links to child Expr nodes
+  std::vector<Expr*> children;
+
+  // Disable value semantics
   Expr(const Expr &);
   Expr &operator=(const Expr &);
 
@@ -19,86 +20,59 @@ public:
 
   virtual double eval(double x) const = 0;
 
-  // TODO: add member functions
+  // Add member functions
   void addChild(Expr* child) { children.push_back(child); }
   Expr* getChild(size_t i) const { return children[i]; }
   size_t numChildren() const { return children.size(); }
 };
 
-// TODO: add derived expression classes
+// Derived expression classes
 class AddExpr : public Expr {
 public:
-  // constructor
-  AddExpr(Expr *left, Expr *right) : left_(left), right_(right) {}
+  // Constructor
+  AddExpr() {}
 
-  // destructor
-  ~AddExpr() {
-    delete left_;
-    delete right_;
-  }
+  // Destructor
+  virtual ~AddExpr();
 
-  // evaluation function
+  // Evaluation function
   virtual double eval(double x) const;
-private:
-  // links to child nodes
-  Expr *left_;
-  Expr *right_;
 };
 
 class SubExpr : public Expr {
 public:
-  // constructor
-  SubExpr(Expr *left, Expr *right) : left_(left), right_(right) {}
+  // Constructor
+  SubExpr() {}
 
-  // destructor
-  ~SubExpr() {
-    delete left_;
-    delete right_;
-  }
+  // Destructor
+  virtual ~SubExpr();
 
-  // evaluation function
+  // Evaluation function
   virtual double eval(double x) const;
-private:
-  // links to child nodes
-  Expr *left_;
-  Expr *right_;
 };
-
-// MultExpr
 
 class MultExpr : public Expr {
-
 public:
-  MultExpr(Expr* left, Expr* right) : m_left(left), m_right(right) {}
+  // Constructor
+  MultExpr() {}
 
-  ~MultExpr() {
-    delete m_left;
-    delete m_right;
-  }
+  // Destructor
+  virtual ~MultExpr();
 
+  // Evaluation function
   virtual double eval(double x) const;
-
-private:
-  Expr* m_left;
-  Expr* m_right;
 };
-
-
-// DivExpr
 
 class DivExpr : public Expr {
 public:
-  DivExpr(Expr* left, Expr* right) : m_left(left), m_right(right) {}
+  // Constructor
+  DivExpr() {}
 
-  ~DivExpr() {
-    delete m_left;
-    delete m_right;
-  }
+  // Destructor
+  virtual ~DivExpr();
 
+  // Evaluation function
   virtual double eval(double x) const;
-private:
-  Expr* m_left;
-  Expr* m_right;
 };
 
 // X class

@@ -9,7 +9,7 @@ Expr::Expr() {
 }
 
 Expr::~Expr() {
-  // TODO: deallocate child nodes (if any)
+  // Deallocate child nodes (if any)
   for (size_t i = 0; i < children.size(); i++) {
     delete children[i];
   }
@@ -17,25 +17,45 @@ Expr::~Expr() {
 
 // TODO: implement member functions for derived classes
 double AddExpr::eval(double x) const {
-  return left_->eval(x) + right_->eval(x);
+  if (numChildren() < 2) {
+    throw PlotException("Add expression requires at least two operands");
+  }
+  double result = 0.0;
+  for (size_t i = 0; i < numChildren(); i++) {
+    result += getChild(i)->eval(x);
+  }
+  return result;
 }
 
 double SubExpr::eval(double x) const {
-  return left_->eval(x) - right_->eval(x);
+  if (numChildren() != 2) {
+    throw PlotException("Subtract expression requires exactly two operands");
+  }
+  return getChild(1)->eval(x) - getChild(0)->eval(x);
 }
 
 double MultExpr::eval(double x) const {
-  return m_left->eval(x) * m_right->eval(x);
+  if (numChildren() < 2) {
+    throw PlotException("Multiply expression requires at least two operands");
+  }
+  double result = 1.0;
+  for (size_t i = 0; i < numChildren(); i++) {
+    result *= getChild(i)->eval(x);
+  }
+  return result;
 }
 
 double DivExpr::eval(double x) const {
-  double denominator = m_right->eval(x);
+  if (numChildren() != 2) {
+    throw PlotException("Divide expression requires exactly two operands");
+  }
+  double denominator = getChild(1)->eval(x);
 
   if (denominator == 0) {
-    throw std::runtime_error("Divide by zero error");
+    throw PlotException("Divide by zero error");
   }
 
-  return m_left->eval(x) / denominator;
+  return getChild(0)->eval(x) / denominator;
 }
 
 double Pi::eval(double x) const {
@@ -47,9 +67,15 @@ double LiteralNumber::eval(double x) const {
 }
 
 double Sin::eval(double x) const {
-    return sin(m_arg->eval(x));
+    if (numChildren() != 1) {
+        throw PlotException("Sin expression requires exactly one operand");
+    }
+    return sin(getChild(0)->eval(x));
 }
 
 double Cos::eval(double x) const {
-    return cos(m_arg->eval(x));
+    if (numChildren() != 1) {
+        throw PlotException("Cos expression requires exactly one operand");
+    }
+    return cos(getChild(0)->eval(x));
 }
