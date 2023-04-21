@@ -28,10 +28,7 @@ Image::Image(int width, int height)
   , m_height(height)
   , m_pixels(new Color[width * height]) {
   // TODO: initialize pixel data
-  //initialize pixel data to black 
-  for (int i = 0; i < width * height; i++) {
-    m_pixels[i] = Color(0, 0, 0);
-  }
+  //added default constructor to color struct 
 }
 
 Image::~Image() {
@@ -45,6 +42,7 @@ void Image::set_pixel(int x, int y, const Color &color) {
   //set pixel at (x, y) to color
   m_pixels[y * m_width + x] = color;
 }
+//Get pixel at (x, y)
 
 Color Image::get_pixel(int x, int y) const {
   if (x < 0 || x >= m_width || y < 0 || y >= m_height) {

@@ -8,6 +8,9 @@
 #include "expr_parser.h"
 #include "fill.h"
 
+using std::string;
+using std::istringstream;
+using std::getline;
 
 Reader::Reader() {
 }
@@ -20,8 +23,8 @@ void Reader::read_input(std::istream &in, Plot &plot) {
   std::string line;
   //read plot input from in, add information to plot
   while (std::getline(in, line)) {
-    std::istringstream iss(line);
-    std::string command;
+    istringstream iss(line);
+    string command;
     iss >> command;
     if (command == "Plot") {
       double x_min, x_max, y_min, y_max;
@@ -40,7 +43,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       plot.set_height(height);
     } 
     else if (command == "Color") {
-      std::string fn_name;
+      string fn_name;
       int r, g, b;
       iss >> fn_name >> r >> g >> b;
       if (r > 255 || g > 255 || b > 255) {
@@ -48,5 +51,17 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       }
       Color color(r, g, b);
     } 
+   else if (command == "Function") {
+      string fn_name;
+      string expr;
+      iss >> fn_name;
+      getline(iss, expr);
+      expr = expr.substr(1);
+      ExprParser parser(expr);
+      plot.add_function(fn_name, parser.parse());
+    } 
+    else {
+      throw PlotException("Invalid command");
+   }
   }
 }

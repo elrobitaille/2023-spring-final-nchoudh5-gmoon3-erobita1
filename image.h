@@ -24,7 +24,7 @@ public:
   // TODO: add member function to access pixel Color data
   void set_pixel(int x, int y, const Color &color);
 
-  Image get_pixel(int x, int y) const;
+  Color get_pixel(int x, int y) const;
 
   const Color* get_pixels() const {return m_pixels;}
 
