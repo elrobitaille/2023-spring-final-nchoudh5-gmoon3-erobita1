@@ -43,14 +43,16 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       plot.set_height(height);
     } 
     else if (command == "Color") {
-      string fn_name;
+      std::string fn_name;
       int r, g, b;
       iss >> fn_name >> r >> g >> b;
       if (r > 255 || g > 255 || b > 255) {
         throw PlotException("Invalid color");
       }
       Color color(r, g, b);
-    } 
+      plot.add_color(fn_name, color);
+    }
+
    else if (command == "Function") {
       string fn_name;
       string expr;

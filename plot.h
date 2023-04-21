@@ -8,39 +8,53 @@
 #include "image.h"
 #include "func.h"
 #include "fill.h"
+#include "color.h"
 
 class Plot {
 private:
-  // TODO: add fields to represent plot bounds, functions, fills, etc.
-  // value semantics are prohibited
-  Plot(const Plot &);
-  Plot &operator=(const Plot &);
-  Bounds bound;
-  int width;
-  int height;
-  std::vector<Function*> functions;
-  std::vector<Fill*> fills;
+  Bounds bound_;
+  int width_;
+  int height_;
+  std::vector<Function*> functions_;
+  std::vector<Fill*> fills_;
+  std::map<std::string, Color> colors_;
+
+  Plot(const Plot&);
+  Plot& operator=(const Plot&);
 
 public:
   Plot();
   ~Plot();
 
-  // TODO: add member functions to set and modify plot data
-  void set_bound(Bounds bound){this->bound = bound;}
-  Bounds get_bound() const {return bound;}
+  // Getter and setter for bound_
+  void set_bound(const Bounds& bound) { bound_ = bound; }
+  Bounds get_bound() const { return bound_; }
 
-  void set_width(int width){this->width = width;}
-  int get_width() const {return width;}
+  // Getter and setter for width_
+  void set_width(int width) { width_ = width; }
+  int get_width() const { return width_; }
 
-  void set_height(int height){this->height = height;}
-  int get_height() const {return height;}
+  // Getter and setter for height_
+  void set_height(int height) { height_ = height; }
+  int get_height() const { return height_; }
 
-  void add_function(Function* function){functions.push_back(function);}
-  const std::vector<Function*>& get_functions() const {return functions;}
+  // Getter and setter for functions_
+  void add_function(Function* function) { functions_.push_back(function); }
+  const std::vector<Function*>& get_functions() const { return functions_; }
 
-  void add_fill(Fill* fill){fills.push_back(fill);}
-  const std::vector<Fill*>& get_fills() const {return fills;}
-  
+  // Getter and setter for fills_
+  void add_fill(Fill* fill) { fills_.push_back(fill); }
+  const std::vector<Fill*>& get_fills() const { return fills_; }
+
+  // Getter and setter for colors_
+  void add_color(const std::string& name, const Color& color) {
+    if (colors_.find(name) != colors_.end()) {
+      throw PlotException("Color with the same name already exists");
+    }
+    colors_[name] = color;
+  }
+
+  const std::map<std::string, Color>& get_colors() const { return colors_; }
 };
 
 #endif // PLOT_H

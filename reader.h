@@ -1,6 +1,8 @@
 #ifndef READER_H
 #define READER_H
 
+#include "plot.h"
+#include <istream>
 class Reader {
 private:
   // value semantics are prohibited
