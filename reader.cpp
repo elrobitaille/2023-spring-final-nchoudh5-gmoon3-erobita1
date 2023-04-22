@@ -58,7 +58,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       string expr;
       iss >> fn_name;
       getline(iss, expr);
-      expr = expr.substr(1);
+      expr.erase(0, expr.find_first_not_of(" \t")); // Removes leading spaces and tabs, avoids core dump
       std::istringstream expr_stream(expr);
       ExprParser parser;
       Function* function = new Function(fn_name, parser.parse(expr_stream));
