@@ -17,7 +17,7 @@ ExprParser::~ExprParser() {
 }
 
 Expr* parsePfxExpr(std::deque<std::string>& tokens) {
-  if (tokens.empty()) {
+  if (tokens.empty()) { // if there are no expression, throw an exception
     throw PlotException("Empty");
   }
 
@@ -28,14 +28,14 @@ Expr* parsePfxExpr(std::deque<std::string>& tokens) {
     // create appropriate expression node and return it
     if (std::isdigit(n[0])) {
       double value = std::stod(n);
-      return new LiteralNumber(value);
+      return new LiteralNumber(value); // return a literal number if n is a number
     }
     else {
-      return new X();
+      return new X(); // return a variable if n is x
     }
   }
   else if (n == "(") {
-    if (tokens.empty()) {
+    if (tokens.empty()) { // if there are no expression, throw an exception
       throw PlotException("Empty");
     }
 
@@ -43,41 +43,41 @@ Expr* parsePfxExpr(std::deque<std::string>& tokens) {
     tokens.pop_front();
 
     if (n != "sin" && n != "cos" && n != "+" && n != "-" && n != "*" && n != "/") {
-      throw PlotException("Invalid function name");
+      throw PlotException("Invalid function name"); // if n is not a valid function name, throw an exception
     }
 
     // create appropriate function node
     Expr* result = nullptr;
-    if (n == "sin") {
+    if (n == "sin") { // if n is sin, create a sin node
       if (tokens.empty()) {
         throw PlotException("Empty");
       }
       Expr* arg = parsePfxExpr(tokens);
       result = new Sin(arg);
     }
-    else if (n == "cos") {
+    else if (n == "cos") { // if n is cos, create a cos node
       if (tokens.empty()) {
         throw PlotException("Empty");
       }
       Expr* arg = parsePfxExpr(tokens);
       result = new Cos(arg);
     }
-    else if (n == "+") {
+    else if (n == "+") { // if n is +, create a add node
       result = new AddExpr();
     }
-    else if (n == "-") {
+    else if (n == "-") { // if n is -, create a sub node
       result = new SubExpr();
     }
-    else if (n == "*") {
+    else if (n == "*") { // if n is *, create a mult node
       result = new MultExpr();
     }
-    else if (n == "/") {
+    else if (n == "/") { // if n is /, create a div node
       result = new DivExpr();
     }
 
-    while (!tokens.empty() && tokens.front() != ")") {
-      Expr* arg = parsePfxExpr(tokens);
-      result->addChild(arg);
+    while (!tokens.empty() && tokens.front() != ")") { // while there are still arguments to be parsed
+      Expr* arg = parsePfxExpr(tokens); // parse the next argument
+      result->addChild(arg); // add the argument to the function node
     }
 
     if (tokens.empty()) {
