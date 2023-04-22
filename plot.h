@@ -10,6 +10,8 @@
 #include "fill.h"
 #include "color.h"
 
+class Fill; 
+
 class Plot {
 private:
   Bounds bound_;
