@@ -29,6 +29,12 @@ Image *Renderer::render() {
   m_img = img.get();
 
   // TODO: render the plot image
+  // 1. fill the background
+  // 2. render the functions
+  // 3. render the fills
+  // 4. return the image
+
+  
 
   return img.release();
 }
