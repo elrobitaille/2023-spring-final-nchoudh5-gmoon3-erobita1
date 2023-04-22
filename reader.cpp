@@ -63,7 +63,47 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       ExprParser parser;
       Function* function = new Function(fn_name, parser.parse(expr_stream));
       plot.add_function(function);
+    }
+
+    else if (command == "FillAbove" || command == "FillBelow") {
+      std::string fn_name1;
+      double opacity;
+      int r, g, b;
+      iss >> fn_name1 >> opacity >> r >> g >> b;
+      if (opacity < 0 || opacity > 1) {
+        throw PlotException("Invalid opacity");
+      }
+      if (r > 255 || g > 255 || b > 255) {
+        throw PlotException("Invalid color");
+      }
+      Color color(r, g, b);
+      if (command == "FillAbove") {
+        Fill* fill = new Fill(FillType::ABOVE, fn_name1, opacity, color);
+        plot.add_fill(fill);
+      } else if (command == "FillBelow") {
+        Fill* fill = new Fill(FillType::BELOW, fn_name1, opacity, color);
+        plot.add_fill(fill);
+      }
     } 
+
+    else if (command == "FillBetween") {
+      std::string fn_name1;
+      std::string fn_name2;
+      double opacity;
+      int r, g, b;
+      iss >> fn_name1 >> opacity >> r >> g >> b;
+      if (opacity < 0 || opacity > 1) {
+        throw PlotException("Invalid opacity");
+      }
+      if (r > 255 || g > 255 || b > 255) {
+        std::cout << "r: " << r << " g: " << g << " b: " << b << std::endl; 
+        throw PlotException("Invalid color3");
+      }
+      Color color(r, g, b);
+      Fill* fill = new Fill(FillType::BETWEEN, fn_name1, fn_name2, opacity, color);
+      plot.add_fill(fill);
+    }
+
     else {
       throw PlotException("Invalid command");
    }
