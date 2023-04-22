@@ -3,7 +3,7 @@
 
 class Bounds {
 private:
-  // TODO: add fields
+  // Defining the bounds of the plot
   double xmin;
   double xmax;
   double ymin;
@@ -15,7 +15,7 @@ public:
   Bounds(double xmin, double xmax, double ymin, double ymax);
   ~Bounds();
 
-  // Define setters and getters for the fields
+  // Define setters and getters for the x and y positions
   double get_xmin() const {return xmin;};
   double get_xmax() const {return xmax;};
   double get_ymin() const {return ymin;};
@@ -26,6 +26,7 @@ public:
   void set_ymin(double ymin);
   void set_ymax(double ymax);
 
+  // Define setters and getters for the width and height
   double get_width() const {return xmax - xmin;};
   double get_height() const {return ymax - ymin;};
 
