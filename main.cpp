@@ -25,21 +25,28 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  // TODO: make sure exceptions are handled properly
+  try {
+    // read the plot description
+    Plot plot;
+    Reader reader;
+    reader.read_input(in, plot);
 
-  Plot plot;
+    // render the plot to an Image
+    Renderer renderer(plot);
+    std::unique_ptr<Image> img(renderer.render());
 
-  // read the plot description
-  Reader reader;
-  reader.read_input(in, plot);
-
-  // render the plot to an Image
-  Renderer renderer(plot);
-  std::unique_ptr<Image> img(renderer.render());
-
-  // write the Image as a PNG file
-  img->write_png(out);
-  std::cout << "Wrote plot image successfully!\n";
-
+    // write the Image as a PNG file
+    img->write_png(out);
+    std::cout << "Wrote plot image successfully!\n";
+  }
+  catch (const PlotException& ex) {
+    std::cerr << "Error: " << ex.what() << std::endl;
+    return 1;
+  }
+  catch (const std::exception& ex) {
+    std::cerr << "Error: " << ex.what() << std::endl;
+    return 1;
+  }
+  
   return 0;
 }

@@ -91,7 +91,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       std::string fn_name2;
       double opacity;
       int r, g, b;
-      iss >> fn_name1 >> opacity >> r >> g >> b;
+      iss >> fn_name1 >> fn_name2 >> opacity >> r >> g >> b;
       if (opacity < 0 || opacity > 1) {
         throw PlotException("Invalid opacity");
       }

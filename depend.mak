@@ -1338,4 +1338,21 @@ fill.o: fill.cpp /usr/include/stdc-predef.h /usr/include/c++/12/cassert \
  /usr/include/c++/12/bits/locale_facets.tcc \
  /usr/include/c++/12/bits/basic_ios.tcc \
  /usr/include/c++/12/bits/ostream.tcc /usr/include/c++/12/istream \
- /usr/include/c++/12/bits/istream.tcc color.h
+ /usr/include/c++/12/bits/istream.tcc color.h plot.h \
+ /usr/include/c++/12/vector /usr/include/c++/12/bits/stl_uninitialized.h \
+ /usr/include/c++/12/bits/stl_vector.h \
+ /usr/include/c++/12/bits/stl_bvector.h \
+ /usr/include/c++/12/bits/vector.tcc /usr/include/c++/12/map \
+ /usr/include/c++/12/bits/stl_tree.h \
+ /usr/include/c++/12/ext/aligned_buffer.h \
+ /usr/include/c++/12/bits/stl_map.h /usr/include/c++/12/tuple \
+ /usr/include/c++/12/bits/uses_allocator.h \
+ /usr/include/c++/12/bits/stl_multimap.h \
+ /usr/include/c++/12/bits/erase_if.h bounds.h func.h expr.h exception.h \
+ /usr/include/c++/12/cmath /usr/include/math.h \
+ /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
+ /usr/include/bits/flt-eval-method.h /usr/include/bits/fp-logb.h \
+ /usr/include/bits/fp-fast.h \
+ /usr/include/bits/mathcalls-helper-functions.h \
+ /usr/include/bits/mathcalls.h /usr/include/bits/mathcalls-narrow.h \
+ /usr/include/bits/iscanonical.h
