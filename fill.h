@@ -11,14 +11,12 @@ enum class FillType {ABOVE, BELOW, BETWEEN};
 
 class Fill {
 private:
-  // TODO: add fields to represent the fill
+  FillType fill_type_;
   std::string fn_name1_;
   std::string fn_name2_;
-  FillType fill_type_;
-  Color color_;
   double opacity_;
+  Color color_;
   
-
 public:
   // TODO: add appropriate constructors
   // Add constructors for each fill type (above, below, between), account for FillAbove and FillBelow, then FillBetween
@@ -28,7 +26,12 @@ public:
   // Destructor 
   ~Fill();
 
-  // TODO: add appropriate member functions
+  // Added appropriate member functions as getters
+  FillType get_fill_type() const {return fill_type_;}
+  const std::string& get_fn_name1() const {return fn_name1_;}
+  const std::string& get_fn_name2() const {return fn_name2_;}
+  double get_opacity() const {return opacity_;}
+  const Color& get_color() const {return color_;}
 };
 
 #endif // FILL_H
