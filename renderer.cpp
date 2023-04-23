@@ -34,9 +34,18 @@ Image *Renderer::render() {
   // 3. render the fills
   // 4. return the image
 
-  
+  renderFills();
+  renderFunctions();
 
   return img.release();
 }
+
+Color colorBlend(const Color& orig, const Color& fill, double alpha) {
+  uint8_t r = std::floor((1 - alpha) * orig.r + alpha * fill.r);
+  uint8_t g = std::floor((1 - alpha) * orig.g + alpha * fill.g);
+  uint8_t b = std::floor((1 - alpha) * orig.b + alpha * fill.b);
+  return Color(r, g, b);
+}
+    
 
 // TODO: implement private helper functions
