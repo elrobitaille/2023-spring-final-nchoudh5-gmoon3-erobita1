@@ -53,9 +53,6 @@ Expr* parsePfxExpr(std::deque<std::string>& tokens) {
       else if (!tokens.empty() && tokens.front() == ")") {
         throw PlotException("Missing argument for sin");
       }
-      else if (tokens.size() > 1 && tokens[1] != ")") {
-        throw PlotException("Too many arguments for sin");
-      }
 
       Expr* arg = parsePfxExpr(tokens);
       result = new Sin(arg);
@@ -67,10 +64,6 @@ Expr* parsePfxExpr(std::deque<std::string>& tokens) {
       else if (!tokens.empty() && tokens.front() == ")") {
         throw PlotException("Missing argument for cos");
       }
-      else if (tokens.size() > 1 && tokens[1] != ")") {
-        throw PlotException("Too many arguments for cos");
-      }
-
       Expr* arg = parsePfxExpr(tokens);
       result = new Cos(arg);
     }

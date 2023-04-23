@@ -61,28 +61,6 @@ int find_pixel_row(int j, const Expr *f, double x_min, double x_max, double y_mi
   return i;
 }
 
-const Function* Renderer::get_func_name(const std::string& name, const std::vector<Function*>& functions) {
-    for (const Function* func : m_plot.get_functions()) {
-        if (func->get_name() == name) {
-            return func;
-        }
-    }
-    return nullptr;
-}
-
-bool Renderer::is_valid_fill(const Fill* fill, double x, double y, const std::vector<Function*>& functions) {
-  const Function* func1 = get_func_name(fill->get_fn_name1(), functions);
-  double func1_value = func1->get_expr()->eval(x);
-
-  if (fill->get_fill_type() == FillType::ABOVE) {
-    return y >= func1_value;
-  } else if (fill->get_fill_type() == FillType::BELOW) {
-    return y <= func1_value;
-  } else if (fill->get_fill_type() == FillType::BETWEEN) {
-  }
-
-  return false;
-}
 
 void Renderer::renderFills() { 
   int width = m_img->get_width();
@@ -92,7 +70,6 @@ void Renderer::renderFills() {
   double x_max = plot_bounds.get_xmax();
   double y_min = plot_bounds.get_ymin();
   double y_max = plot_bounds.get_ymax();
-
   for (const Fill* fill : m_plot.get_fills()) {
     for (int i = 0; i < height; ++i) {
       for (int j = 0; j < width; ++j) {
@@ -100,8 +77,43 @@ void Renderer::renderFills() {
         double x = xy.first;
         double y = xy.second;
 
-        bool in_fill_area = is_valid_fill(fill, x, y, m_plot.get_functions());
+        const Function* function1 = nullptr;
+          for (const Function* func : m_plot.get_functions()) {
+            if (func->get_name() == fill->get_fn_name1()) {
+              function1 = func;
+              break;
+          }
+        }
 
+        bool in_fill_area = false;
+
+        if (fill->get_fill_type() == FillType::ABOVE) {
+          if (y >= function1->get_expr()->eval(x)) {
+            in_fill_area = true;
+          }
+        } else if (fill->get_fill_type() == FillType::BELOW) {
+          if (y <= function1->get_expr()->eval(x)) {
+            in_fill_area = true;
+          }
+        } else if (fill->get_fill_type() == FillType::BETWEEN) {
+          const Function* function2 = nullptr;
+          for (const Function* func : m_plot.get_functions()) {
+            if (func->get_name() == fill->get_fn_name2()) {
+              function2 = func;
+              break;
+            }
+          }
+          
+          if (y >= function1->get_expr()->eval(x) && y <= function2->get_expr()->eval(x)) {
+            in_fill_area = true;
+          }
+        }
+
+        if (in_fill_area) {
+          Color original_color = m_img->get_pixel(j, i);
+          Color blended_color = color_blend(original_color, fill->get_color(), fill->get_opacity());
+          m_img->set_pixel(j, i, blended_color);
+        }
       }
     }
   }
