@@ -15,27 +15,25 @@ ExprParser::ExprParser() {
 
 ExprParser::~ExprParser() {
 }
-
 Expr* parsePfxExpr(std::deque<std::string>& tokens) {
-  if (tokens.empty()) { // if there are no expression, throw an exception
+  if (tokens.empty()) {
     throw PlotException("Empty");
   }
 
   std::string n = tokens.front();
   tokens.pop_front();
 
-  if (n == "x" || n == "pi" || std::isdigit(n[0])) { // n is a variable, constant, or literal number
-    // create appropriate expression node and return it
+  if (n == "x" || n == "pi" || std::isdigit(n[0])) {
     if (std::isdigit(n[0])) {
       double value = std::stod(n);
-      return new LiteralNumber(value); // return a literal number if n is a number
+      return new LiteralNumber(value);
     }
     else {
-      return new X(); // return a variable if n is x
+      return new X();
     }
   }
   else if (n == "(") {
-    if (tokens.empty()) { // if there are no expression, throw an exception
+    if (tokens.empty()) {
       throw PlotException("Empty");
     }
 
@@ -43,48 +41,62 @@ Expr* parsePfxExpr(std::deque<std::string>& tokens) {
     tokens.pop_front();
 
     if (n != "sin" && n != "cos" && n != "+" && n != "-" && n != "*" && n != "/") {
-      throw PlotException("Invalid function name"); // if n is not a valid function name, throw an exception
+      throw PlotException("Invalid function name");
     }
 
     // create appropriate function node
     Expr* result = nullptr;
-    if (n == "sin") { // if n is sin, create a sin node
+    if (n == "sin") {
       if (tokens.empty()) {
-        throw PlotException("Empty");
+        throw PlotException("Missing argument for sin");
       }
+      else if (!tokens.empty() && tokens.front() == ")") {
+        throw PlotException("Missing argument for sin");
+      }
+      else if (tokens.size() > 1 && tokens[1] != ")") {
+        throw PlotException("Too many arguments for sin");
+      }
+
       Expr* arg = parsePfxExpr(tokens);
       result = new Sin(arg);
     }
-    else if (n == "cos") { // if n is cos, create a cos node
+    else if (n == "cos") {
       if (tokens.empty()) {
-        throw PlotException("Empty");
+        throw PlotException("Missing argument for cos");
       }
+      else if (!tokens.empty() && tokens.front() == ")") {
+        throw PlotException("Missing argument for cos");
+      }
+      else if (tokens.size() > 1 && tokens[1] != ")") {
+        throw PlotException("Too many arguments for cos");
+      }
+
       Expr* arg = parsePfxExpr(tokens);
       result = new Cos(arg);
     }
-    else if (n == "+") { // if n is +, create a add node
+    else if (n == "+") {
       result = new AddExpr();
     }
-    else if (n == "-") { // if n is -, create a sub node
+    else if (n == "-") {
       result = new SubExpr();
     }
-    else if (n == "*") { // if n is *, create a mult node
+    else if (n == "*") {
       result = new MultExpr();
     }
-    else if (n == "/") { // if n is /, create a div node
+    else if (n == "/") {
       result = new DivExpr();
     }
 
-    while (!tokens.empty() && tokens.front() != ")") { // while there are still arguments to be parsed
-      Expr* arg = parsePfxExpr(tokens); // parse the next argument
-      result->addChild(arg); // add the argument to the function node
+    while (!tokens.empty() && tokens.front() != ")") {
+      Expr* arg = parsePfxExpr(tokens);
+      result->addChild(arg);
     }
 
     if (tokens.empty()) {
       throw PlotException("Missing right parenthesis");
     }
 
-    tokens.pop_front(); // remove the right parenthesis token
+    tokens.pop_front();
 
     return result;
   }
