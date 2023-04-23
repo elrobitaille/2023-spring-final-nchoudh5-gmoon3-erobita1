@@ -70,6 +70,5 @@ void Renderer::renderFills() {
   double x_max = plot_bounds.get_xmax();
   double y_min = plot_bounds.get_ymin();
   double y_max = plot_bounds.get_ymax();
-
 }
 
