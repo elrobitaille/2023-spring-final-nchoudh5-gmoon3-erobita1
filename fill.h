@@ -7,10 +7,12 @@
 #include "plot.h"
 #include "func.h"
 
+// Added enum class FillType to represent the type of fill: Above, Below, or Between
 enum class FillType {ABOVE, BELOW, BETWEEN};
 
 class Fill {
 private:
+  // Added private member variables to represent the fill type, the function names, the opacity, and color
   FillType fill_type_;
   std::string fn_name1_;
   std::string fn_name2_;
@@ -18,8 +20,7 @@ private:
   Color color_;
   
 public:
-  // TODO: add appropriate constructors
-  // Add constructors for each fill type (above, below, between), account for FillAbove and FillBelow, then FillBetween
+  // Added constructors for each fill type (above, below, between), account for FillAbove and FillBelow, then FillBetween
   Fill(FillType fill_type, const std::string& fn_name1, double opacity, const Color& color);
   Fill(FillType fill_type, const std::string& fn_name1, const std::string& fn_name2, double opacity, const Color& color);
   
