@@ -1,7 +1,7 @@
 #include <cassert>
 #include "fill.h"
 
-// Constructor for FillAbove and FillBelow
+// Non-default Constructor for Fill Above and Fill Below
 Fill::Fill(FillType fill_type, const std::string& fn_name1, double opacity, const Color& color)
     : fill_type_(fill_type), fn_name1_(fn_name1), opacity_(opacity), color_(color) {
 }
