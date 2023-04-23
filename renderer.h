@@ -15,14 +15,20 @@ private:
   Renderer(const Renderer &);
   Renderer &operator=(const Renderer &);
 
+  void renderFills();
+  void renderFunctions();
+
 public:
   Renderer(const Plot &plot);
   ~Renderer();
 
   Image *render();
 
+/* 
 private:
   // TODO: add private helper functions
+*/
+
 };
 
 #endif // RENDERER_H
