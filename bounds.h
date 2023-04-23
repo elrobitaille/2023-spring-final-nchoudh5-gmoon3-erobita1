@@ -3,7 +3,7 @@
 
 class Bounds {
 private:
-  // Defining the bounds of the plot
+  // Defining the bounds of the plot and coordinates
   double xmin;
   double xmax;
   double ymin;
@@ -33,7 +33,7 @@ public:
   double set_width(double width);
   double set_height(double height);
 
-  // Returns if the value is within the bounds as it should be
+  // Returns if the value is within the bounds as it should be, used for error handling out of bound
   bool contains(double x, double y) const {
     return (x >= xmin && x <= xmax && y >= ymin && y <= ymax);
   }
