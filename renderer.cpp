@@ -54,8 +54,22 @@ std::pair<double, double> pixel_to_XY(int i, int j, double x_min, double x_max, 
   return std::make_pair(x, y);
 }
 
+int find_pixel_row(int j, const Expr *f, double x_min, double x_max, double y_min, double y_max, int width, int height) {
+  double x = x_min + (j /(width)) * (x_max - x_min);
+  double y = f->eval(x);
+  int i = height - 1 - std::floor(((y - y_min) / (y_max - y_min)) * height);
+  return i;
+}
+
 
 void Renderer::renderFills() { 
+  int width = m_img->get_width();
+  int height = m_img->get_height();
+  Bounds plot_bounds = m_plot.get_bound();
+  double x_min = plot_bounds.get_xmin();
+  double x_max = plot_bounds.get_xmax();
+  double y_min = plot_bounds.get_ymin();
+  double y_max = plot_bounds.get_ymax();
 
 }
 
