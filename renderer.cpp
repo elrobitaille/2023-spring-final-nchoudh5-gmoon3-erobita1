@@ -48,19 +48,27 @@ Color Renderer::color_blend(const Color& orig, const Color& fill, double alpha) 
   return Color(r, g, b);
 }
 
-std::pair<double, double> pixel_to_XY(int i, int j, double x_min, double x_max, double y_min, double y_max, int width, int height) {
-  double x = x_min + (j/(width)) * (x_max - x_min);
-  double y = y_min + ((height - 1 - i)/(height)) * (y_max - y_min);
+std::pair<double, double> Renderer::pixel_to_XY(int i, int j, double x_min, double x_max, double y_min, double y_max, int width, int height) {
+  double x = x_min + (j/static_cast<double>(width)) * (x_max - x_min);
+  double y = y_min + ((height - 1 - i)/static_cast<double>(height)) * (y_max - y_min);
   return std::make_pair(x, y);
 }
 
 int find_pixel_row(int j, const Expr *f, double x_min, double x_max, double y_min, double y_max, int width, int height) {
-  double x = x_min + (j /(width)) * (x_max - x_min);
+  double x = x_min + (j /static_cast<double>(width)) * (x_max - x_min);
   double y = f->eval(x);
   int i = height - 1 - std::floor(((y - y_min) / (y_max - y_min)) * height);
   return i;
 }
 
+const Function* Renderer::get_func_name(const std::string& name) const {
+    for (const Function* func : m_plot.get_functions()) {
+        if (func->get_name() == name) {
+            return func;
+        }
+    }
+    return nullptr;
+}
 
 void Renderer::renderFills() { 
   int width = m_img->get_width();
@@ -70,5 +78,15 @@ void Renderer::renderFills() {
   double x_max = plot_bounds.get_xmax();
   double y_min = plot_bounds.get_ymin();
   double y_max = plot_bounds.get_ymax();
+  for (const Fill* fill : m_plot.get_fills()) {
+    for (int i = 0; i < height; ++i) {
+      for (int j = 0; j < width; ++j) {
+        std::pair<double, double> xy = pixel_to_XY(i, j, x_min, x_max, y_min, y_max, width, height);
+        double x = xy.first;
+        double y = xy.second;
+
+      }
+    }
+  }
 }
 
