@@ -35,17 +35,27 @@ Image *Renderer::render() {
   // 4. return the image
 
   renderFills();
-  renderFunctions();
+  //renderFunctions();
 
   return img.release();
 }
 
-Color colorBlend(const Color& orig, const Color& fill, double alpha) {
+// Color blending function which utilizes formula provided C_blend = (1 - alpha) * C_orig + alpha * C_fill to blend the original color with the fill color
+Color Renderer::color_blend(const Color& orig, const Color& fill, double alpha) {
   uint8_t r = std::floor((1 - alpha) * orig.r + alpha * fill.r);
   uint8_t g = std::floor((1 - alpha) * orig.g + alpha * fill.g);
   uint8_t b = std::floor((1 - alpha) * orig.b + alpha * fill.b);
   return Color(r, g, b);
 }
-    
 
-// TODO: implement private helper functions
+std::pair<double, double> pixel_to_XY(int i, int j, double x_min, double x_max, double y_min, double y_max, int width, int height) {
+  double x = x_min + (j/(width)) * (x_max - x_min);
+  double y = y_min + ((height - 1 - i)/(height)) * (y_max - y_min);
+  return std::make_pair(x, y);
+}
+
+
+void Renderer::renderFills() { 
+
+}
+
