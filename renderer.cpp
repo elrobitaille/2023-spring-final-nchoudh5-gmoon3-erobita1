@@ -49,12 +49,15 @@ Color Renderer::color_blend(const Color& orig, const Color& fill, double alpha) 
   return Color(r, g, b);
 }
 
+/* Function that determines precise location of x/y coordinates for a pixel, which allows determination of if a point is above,below, or between functions
+and decide if it should be filled. Uses formulas xj = x_min + (j/w) * (x_max - x_min), yi = y_min + ((h - 1 - i)/h) * (y_max - y_min) */
 std::pair<double, double> Renderer::pixel_to_XY(int i, int j, double x_min, double x_max, double y_min, double y_max, int width, int height) {
   double x = x_min + (j/static_cast<double>(width)) * (x_max - x_min);
   double y = y_min + ((height - 1 - i)/static_cast<double>(height)) * (y_max - y_min);
   return std::make_pair(x, y);
 }
 
+// Calculates the pixel row. For column j, the row i is calculated by the formula provided: i = h - 1 - floor((y-y_min)/(y_max-y_min) * h), where y = f(x_min + (j/w) * (x_max - x_min))  
 int Renderer::find_pixel_row(int j, const Expr *f, double x_min, double x_max, double y_min, double y_max, int width, int height) {
   double x = x_min + (j /static_cast<double>(width)) * (x_max - x_min);
   double y = f->eval(x);
@@ -62,7 +65,7 @@ int Renderer::find_pixel_row(int j, const Expr *f, double x_min, double x_max, d
   return i;
 }
 
-const Function* Renderer::get_func_name(const std::string& name, const std::vector<Function*>& functions) {
+const Function* Renderer::get_func_name(const std::string& name) {
     for (const Function* func : m_plot.get_functions()) {
         if (func->get_name() == name) {
             return func;
@@ -71,8 +74,8 @@ const Function* Renderer::get_func_name(const std::string& name, const std::vect
     return nullptr;
 }
 
-bool Renderer::is_valid_fill(const Fill* fill, double x, double y, const std::vector<Function*>& functions) {
-  const Function* func1 = get_func_name(fill->get_fn_name1(), functions);
+bool Renderer::is_valid_fill(const Fill* fill, double x, double y) {
+  const Function* func1 = get_func_name(fill->get_fn_name1());
   if (func1 == nullptr) {
       return false;
   }
@@ -83,7 +86,7 @@ bool Renderer::is_valid_fill(const Fill* fill, double x, double y, const std::ve
   } else if (fill->get_fill_type() == FillType::BELOW) {
     return y <= func1_value;
   } else if (fill->get_fill_type() == FillType::BETWEEN) {
-    const Function* func2 = get_func_name(fill->get_fn_name2(), functions);
+    const Function* func2 = get_func_name(fill->get_fn_name2());
     if (func2 == nullptr) {
       return false;
     }
@@ -93,7 +96,6 @@ bool Renderer::is_valid_fill(const Fill* fill, double x, double y, const std::ve
 
   return false;
 }
-
 
 void Renderer::renderFills() { 
   int width = m_img->get_width();
@@ -111,7 +113,7 @@ void Renderer::renderFills() {
         double x = xy.first;
         double y = xy.second;
 
-        bool in_fill_area = is_valid_fill(fill, x, y, m_plot.get_functions());
+        bool in_fill_area = is_valid_fill(fill, x, y);
 
         if (in_fill_area) {
           Color original_color = m_img->get_pixel(j, i);
