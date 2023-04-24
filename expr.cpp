@@ -17,9 +17,6 @@ Expr::~Expr() {
 
 // TODO: implement member functions for derived classes
 double AddExpr::eval(double x) const {
-  if (numChildren() < 2) {
-    throw PlotException("Add expression requires at least two operands");
-  }
   double result = 0.0;
   for (size_t i = 0; i < numChildren(); i++) {
     result += getChild(i)->eval(x);
@@ -35,9 +32,6 @@ double SubExpr::eval(double x) const {
 }
 
 double MultExpr::eval(double x) const {
-  if (numChildren() < 2) {
-    throw PlotException("Multiply expression requires at least two operands");
-  }
   double result = 1.0;
   for (size_t i = 0; i < numChildren(); i++) {
     result *= getChild(i)->eval(x);
