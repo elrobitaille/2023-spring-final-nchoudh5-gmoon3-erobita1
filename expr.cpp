@@ -52,13 +52,11 @@ double DivExpr::eval(double x) const {
   return getChild(0)->eval(x) / denominator;
 }
 
-double Pi::eval(double x) const {
-  (void) x;
+double Pi::eval(double) const {
   return M_PI;
 }
 
-double LiteralNumber::eval(double x) const {
-  (void) x;
+double LiteralNumber::eval(double) const {
   return m_value;
 }
 
