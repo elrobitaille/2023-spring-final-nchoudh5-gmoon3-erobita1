@@ -9,6 +9,7 @@ private:
   // value semantics are prohibited
   ExprParser(const ExprParser &);
   ExprParser &operator=(const ExprParser &);
+  bool is_numeric(const std::string& str);
 
 public:
   ExprParser();

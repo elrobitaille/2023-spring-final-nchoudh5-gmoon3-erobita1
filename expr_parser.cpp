@@ -15,6 +15,16 @@ ExprParser::ExprParser() {
 
 ExprParser::~ExprParser() {
 }
+
+bool is_numeric(const std::string& str) {
+  for (char c : str) {
+    if (!isdigit(c) && c != '.') {
+      return false;
+    }
+  }
+  return !str.empty();
+}
+
 Expr* parsePfxExpr(std::deque<std::string>& tokens) {
   if (tokens.empty()) {
     throw PlotException("Empty");
@@ -23,8 +33,8 @@ Expr* parsePfxExpr(std::deque<std::string>& tokens) {
   std::string n = tokens.front();
   tokens.pop_front();
 
-  if (n == "x" || n == "pi" || std::isdigit(n[0])) {
-    if (std::isdigit(n[0])) {
+  if (n == "x" || n == "pi" || is_numeric(n)) {
+    if (is_numeric(n)) {
       double value = std::stod(n);
       return new LiteralNumber(value);
     }
