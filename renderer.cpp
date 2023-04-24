@@ -35,7 +35,7 @@ Image *Renderer::render() {
   // 4. return the image
 
   renderFills();
-  //renderFunctions();
+  renderFunctions();
 
   return img.release();
 }
@@ -117,6 +117,33 @@ void Renderer::renderFills() {
           Color blended_color = color_blend(original_color, fill->get_color(), fill->get_opacity());
           m_img->set_pixel(j, i, blended_color);
         }
+      }
+    }
+  }
+}
+
+void Renderer::renderFunctions() {
+  int width = m_img->get_width();
+  int height = m_img->get_height();
+  Bounds plot_bounds = m_plot.get_bound();
+  double x_min = plot_bounds.get_xmin();
+  double x_max = plot_bounds.get_xmax();
+  double y_min = plot_bounds.get_ymin();
+  double y_max = plot_bounds.get_ymax();
+
+  // Render each function in the plot
+  for (const Function* func : m_plot.get_functions()) {
+    //const Color& func_color = 
+    const Expr* func_expr = func->get_expr();
+
+    // Iterate through all columns (x-axis)
+    for (int j = 0; j < width; ++j) {
+      // Find the corresponding row (y-axis) for the current column
+      int i = find_pixel_row(j, func_expr, x_min, x_max, y_min, y_max, width, height);
+
+      // If the row is within the image height, set the pixel to the function's color
+      if (i >= 0 && i < height) {
+        m_img->set_pixel(j, i, func_color);
       }
     }
   }
