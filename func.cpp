@@ -7,4 +7,5 @@ Function::Function(const std::string &name, Expr *expr)
 
 Function::~Function() {
   // TODO: deallocate objects if necessary
+  delete m_expr;
 }
