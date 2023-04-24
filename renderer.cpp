@@ -87,7 +87,7 @@ bool Renderer::is_valid_fill(const Fill* fill, double x, double y, const std::ve
       return false;
     }
     double func2_value = func2->get_expr()->eval(x);
-    return y >= func1_value && y <= func2_value;
+    return (y >= func1_value && y <= func2_value) || (y <= func1_value && y >= func2_value);
     }
 
   return false;
@@ -133,7 +133,7 @@ void Renderer::renderFunctions() {
 
   // Render each function in the plot
   for (const Function* func : m_plot.get_functions()) {
-    //const Color& func_color = 
+    const Color& func_color = Color(255, 255, 255);
     const Expr* func_expr = func->get_expr();
 
     // Iterate through all columns (x-axis)
