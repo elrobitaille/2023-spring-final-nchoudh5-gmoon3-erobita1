@@ -1,3 +1,45 @@
+commit 462251a89b0a7f8d0ea6bf9347c43f31729b9125
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Mon Apr 24 18:10:14 2023 -0400
+
+    Ex 5 now works
+
+commit a7e57e30a05ad5da804915987180ea2bcdcfea7c
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Mon Apr 24 18:09:13 2023 -0400
+
+    Fixed issue with - sign in txt input and added numeric helper fcn
+
+commit e316c4815d879ee2be3cf37f368fbdc58bc2d8b9
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Mon Apr 24 17:16:33 2023 -0400
+
+    Comments and small change
+
+commit 939e327792cc4dd700037a7e515d4eab916d35cc
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Mon Apr 24 17:15:41 2023 -0400
+
+    Minor changes and comments added to renderer
+
+commit 457238380d99ba3d58d0f9f7a9f47333daeadadf
+Author: Nikhil Choudhary <nikhilch@outlook.com>
+Date:   Mon Apr 24 16:38:34 2023 -0400
+
+    Added condition to make sure point is within bounds
+
+commit b18ab4a046c9af6f2629b8ecfeb2fc7113104db3
+Author: Nikhil Choudhary <nikhilch@outlook.com>
+Date:   Mon Apr 24 15:52:48 2023 -0400
+
+    Added pluses
+
+commit e0de990f63b82b90c96a5243ff7617c8ca9979ea
+Author: Nikhil Choudhary <nikhilch@outlook.com>
+Date:   Mon Apr 24 15:38:48 2023 -0400
+
+    Made default color white in renderFuncs
+
 commit 08dc954da472e8c825590b8543404ed887d761aa
 Author: Nikhil Choudhary <nikhilch@outlook.com>
 Date:   Mon Apr 24 15:16:45 2023 -0400

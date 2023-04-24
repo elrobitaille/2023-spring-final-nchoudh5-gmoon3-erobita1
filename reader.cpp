@@ -49,6 +49,9 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       if (r > 255 || g > 255 || b > 255) {
         throw PlotException("Invalid color");
       }
+      else if (r < 0 || g < 0 || b < 0) {
+        throw PlotException("Invalid color");
+      }
       Color color(r, g, b);
       plot.add_color(fn_name, color);
     }
