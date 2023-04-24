@@ -150,6 +150,10 @@ void Renderer::renderFunctions() {
       // If the row is within the image height, set the pixel to the function's color
       if (i >= 0 && i < height) {
         m_img->set_pixel(j, i, func_color);
+        m_img->set_pixel(j+1, i, func_color);
+        m_img->set_pixel(j-1, i, func_color);
+        m_img->set_pixel(j, i+1, func_color);
+        m_img->set_pixel(j, i-1, func_color);
       }
     }
   }
