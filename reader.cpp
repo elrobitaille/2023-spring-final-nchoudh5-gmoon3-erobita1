@@ -29,7 +29,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
     if (command == "Plot") {
       double x_min, x_max, y_min, y_max;
       int width, height;
-      if (iss >> x_min >> y_min >> x_max >> y_max >> width >> height && iss.good()) {
+      if (iss >> x_min >> y_min >> x_max >> y_max >> width >> height && iss.eof()) {
         if (x_min >= x_max || y_min >= y_max) {
           throw PlotException("Invalid bounds");
         }
@@ -43,7 +43,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
     else if (command == "Color") {
       std::string fn_name;
       int r, g, b;
-      if (iss >> fn_name >> r >> g >> b && iss.good()) {
+      if (iss >> fn_name >> r >> g >> b && iss.eof()) {
         if (r > 255 || g > 255 || b > 255) {
           throw PlotException("Invalid color");
         }
@@ -53,18 +53,24 @@ void Reader::read_input(std::istream &in, Plot &plot) {
         Color color(r, g, b);
         plot.add_color(fn_name, color);
       }
+      else {
+        throw PlotException("Invalid number of arguments");
+      }
     }
 
    else if (command == "Function") {
       string fn_name;
       string expr;
-      if (iss >> fn_name && iss.good()) {
+      if (iss >> fn_name && iss.eof()) {
         getline(iss, expr);
         expr.erase(0, expr.find_first_not_of(" \t")); // Removes leading spaces and tabs, avoids core dump
         std::istringstream expr_stream(expr);
         ExprParser parser;
         Function* function = new Function(fn_name, parser.parse(expr_stream));
         plot.add_function(function);
+      }
+      else {
+        throw PlotException("Invalid number of arguments");
       }
    }
 
@@ -74,12 +80,12 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       double opacity;
       int r, g, b;
       if (command == "FillBetween") {
-        if (!(iss >> fn_name1 >> fn_name2 >> opacity >> r >> g >> b) && !iss.good()) {
-          throw PlotException("Wrong number of arguments");
+        if (!(iss >> fn_name1 >> fn_name2 >> opacity >> r >> g >> b) && iss.eof()) {
+          throw PlotException("Invalid number of arguments");
         }
       } else {
-        if (!(iss >> fn_name1 >> opacity >> r >> g >> b) && !iss.good()) {
-          throw PlotException("Wrong number of arguments");
+        if (!(iss >> fn_name1 >> opacity >> r >> g >> b) && iss.eof()) {
+          throw PlotException("Invalid number of arguments");
         }
       }
       
@@ -105,4 +111,5 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       throw PlotException("Invalid command");
    }
   }
+}
 }
