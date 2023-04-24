@@ -28,6 +28,9 @@ Expr* parsePfxExpr(std::deque<std::string>& tokens) {
       double value = std::stod(n);
       return new LiteralNumber(value);
     }
+    else if (n == "pi") {
+      return new Pi();
+    }
     else {
       return new X();
     }
