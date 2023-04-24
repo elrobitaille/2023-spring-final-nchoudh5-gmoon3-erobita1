@@ -53,11 +53,13 @@ double DivExpr::eval(double x) const {
 }
 
 double Pi::eval(double x) const {
+  (void) x;
   return M_PI;
 }
 
 double LiteralNumber::eval(double x) const {
-    return m_value;
+  (void) x;
+  return m_value;
 }
 
 double Sin::eval(double x) const {
