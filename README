@@ -4,7 +4,7 @@ invalid plot bound (e.g., xmin is not less than xmax)
 invalid image dimensions (e.g., width is not positive)
 the wrong number of arguments are passed to a function (e.g., sin with more than 1 argument)
 error parsing prefix expression
-attempt to divide by 0
+
 unknown function name in expression
 error writing PNG file (image.cpp already has code to detect these errors and throw an exception)
 more than one Color directive for a function

@@ -28,45 +28,45 @@ void Reader::read_input(std::istream &in, Plot &plot) {
     iss >> command;
     if (command == "Plot") {
       double x_min, x_max, y_min, y_max;
-      iss >> x_min >> y_min >> x_max >> y_max;
-      if (x_min >= x_max || y_min >= y_max) {
-        throw PlotException("Invalid bounds");
-      }
-      plot.set_bound(Bounds(x_min, x_max, y_min, y_max));
-
       int width, height;
-      iss >> width >> height;
-      if (width <= 0 || height <= 0) {
-        throw PlotException("Invalid image size");
-      }
-      plot.set_width(width);
-      plot.set_height(height);
+      if (iss >> x_min >> y_min >> x_max >> y_max >> width >> height && iss.good()) {
+        if (x_min >= x_max || y_min >= y_max) {
+          throw PlotException("Invalid bounds");
+        }
+        plot.set_bound(Bounds(x_min, x_max, y_min, y_max));
+        if (width <= 0 || height <= 0) {
+          throw PlotException("Invalid image size");
+        }
+        plot.set_width(width);
+        plot.set_height(height);
     } 
     else if (command == "Color") {
       std::string fn_name;
       int r, g, b;
-      iss >> fn_name >> r >> g >> b;
-      if (r > 255 || g > 255 || b > 255) {
-        throw PlotException("Invalid color");
+      if (iss >> fn_name >> r >> g >> b && iss.good()) {
+        if (r > 255 || g > 255 || b > 255) {
+          throw PlotException("Invalid color");
+        }
+        else if (r < 0 || g < 0 || b < 0) {
+          throw PlotException("Invalid color");
+        }
+        Color color(r, g, b);
+        plot.add_color(fn_name, color);
       }
-      else if (r < 0 || g < 0 || b < 0) {
-        throw PlotException("Invalid color");
-      }
-      Color color(r, g, b);
-      plot.add_color(fn_name, color);
     }
 
    else if (command == "Function") {
       string fn_name;
       string expr;
-      iss >> fn_name;
-      getline(iss, expr);
-      expr.erase(0, expr.find_first_not_of(" \t")); // Removes leading spaces and tabs, avoids core dump
-      std::istringstream expr_stream(expr);
-      ExprParser parser;
-      Function* function = new Function(fn_name, parser.parse(expr_stream));
-      plot.add_function(function);
-    }
+      if (iss >> fn_name && iss.good()) {
+        getline(iss, expr);
+        expr.erase(0, expr.find_first_not_of(" \t")); // Removes leading spaces and tabs, avoids core dump
+        std::istringstream expr_stream(expr);
+        ExprParser parser;
+        Function* function = new Function(fn_name, parser.parse(expr_stream));
+        plot.add_function(function);
+      }
+   }
 
     else if (command == "FillAbove" || command == "FillBelow" || command == "FillBetween") {
       std::string fn_name1;
@@ -74,9 +74,13 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       double opacity;
       int r, g, b;
       if (command == "FillBetween") {
-        iss >> fn_name1 >> fn_name2 >> opacity >> r >> g >> b;
+        if (!(iss >> fn_name1 >> fn_name2 >> opacity >> r >> g >> b) && !iss.good()) {
+          throw PlotException("Wrong number of arguments");
+        }
       } else {
-        iss >> fn_name1 >> opacity >> r >> g >> b;
+        if (!(iss >> fn_name1 >> opacity >> r >> g >> b) && !iss.good()) {
+          throw PlotException("Wrong number of arguments");
+        }
       }
       
       if (opacity < 0 || opacity > 1) {
