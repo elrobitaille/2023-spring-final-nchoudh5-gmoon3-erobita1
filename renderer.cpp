@@ -4,6 +4,7 @@
 #include <memory>
 #include "exception.h"
 #include "renderer.h"
+#include "color.h"
 
 //#define DEBUG_FILL
 //#define DEBUG_PLOT
@@ -131,9 +132,18 @@ void Renderer::renderFunctions() {
   double y_min = plot_bounds.get_ymin();
   double y_max = plot_bounds.get_ymax();
 
+  // Get the color map from the plot object
+  const std::map<std::string, Color>& color_map = m_plot.get_colors();
+
   // Render each function in the plot
   for (const Function* func : m_plot.get_functions()) {
-    const Color& func_color = Color(255, 255, 255);
+    // Get the color for the current function using its name as a key in the color map
+    std::map<std::string, Color>::const_iterator color_itr = color_map.find(func->get_name());
+    if (color_itr == color_map.end()) {
+      throw PlotException("Color not found for function: " + func->get_name());
+    }
+    const Color& func_color = color_itr->second;
+
     const Expr* func_expr = func->get_expr();
 
     // Iterate through all columns (x-axis)
