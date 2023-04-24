@@ -31,7 +31,7 @@ double SubExpr::eval(double x) const {
   if (numChildren() != 2) {
     throw PlotException("Subtract expression requires exactly two operands");
   }
-  return getChild(1)->eval(x) - getChild(0)->eval(x);
+  return getChild(0)->eval(x) - getChild(1)->eval(x);
 }
 
 double MultExpr::eval(double x) const {
