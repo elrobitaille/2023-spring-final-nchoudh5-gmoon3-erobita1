@@ -123,6 +123,14 @@ void Renderer::renderFills() {
   }
 }
 
+void Renderer::draw_pixel(int x, int y, Color &func_color) {
+  int width = m_img->get_width();
+  int height = m_img->get_height();
+  if (x >= 0 && x < width && y >=0 && y < height) {
+    m_img -> set_pixel(x, y, func_color);
+  }
+}
+
 void Renderer::renderFunctions() {
   int width = m_img->get_width();
   int height = m_img->get_height();
@@ -149,11 +157,11 @@ void Renderer::renderFunctions() {
 
       // If the row is within the image height, set the pixel to the function's color
       if (i >= 0 && i < height) {
-        m_img->set_pixel(j, i, func_color);
-        m_img->set_pixel(j+1, i, func_color);
-        m_img->set_pixel(j-1, i, func_color);
-        m_img->set_pixel(j, i+1, func_color);
-        m_img->set_pixel(j, i-1, func_color);
+        draw_pixel(j, i, func_color);
+        draw_pixel(j+1, i, func_color);
+        draw_pixel(j-1, i, func_color);
+        draw_pixel(j, i+1, func_color);
+        draw_pixel(j, i-1, func_color);
       }
     }
   }

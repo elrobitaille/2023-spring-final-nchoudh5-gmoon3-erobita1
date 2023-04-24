@@ -15,6 +15,7 @@ private:
   Renderer(const Renderer &);
   Renderer &operator=(const Renderer &);
 
+  void draw_pixel(int x, int y, Color &func_color);
   void renderFills();
   void renderFunctions();
   Color color_blend(const Color& orig, const Color& fill, double alpha);
