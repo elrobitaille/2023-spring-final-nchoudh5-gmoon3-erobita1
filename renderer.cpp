@@ -132,18 +132,14 @@ void Renderer::renderFunctions() {
   double y_min = plot_bounds.get_ymin();
   double y_max = plot_bounds.get_ymax();
 
-  // Get the color map from the plot object
-  const std::map<std::string, Color>& color_map = m_plot.get_colors();
-
   // Render each function in the plot
   for (const Function* func : m_plot.get_functions()) {
-    // Get the color for the current function using its name as a key in the color map
-    std::map<std::string, Color>::const_iterator color_itr = color_map.find(func->get_name());
-    if (color_itr == color_map.end()) {
-      throw PlotException("Color not found for function: " + func->get_name());
+    // If a color value for the function was specified, use that color
+    std::map<std::string, Color>::const_iterator func_color_iter = m_plot.get_colors().find(func->get_name());
+    Color func_color(255, 255, 255);
+    if (func_color_iter != m_plot.get_colors().end()) {
+        func_color = func_color_iter->second;
     }
-    const Color& func_color = color_itr->second;
-
     const Expr* func_expr = func->get_expr();
 
     // Iterate through all columns (x-axis)
@@ -154,10 +150,6 @@ void Renderer::renderFunctions() {
       // If the row is within the image height, set the pixel to the function's color
       if (i >= 0 && i < height) {
         m_img->set_pixel(j, i, func_color);
-        m_img->set_pixel(j+1, i, func_color);
-        m_img->set_pixel(j-1, i, func_color);
-        m_img->set_pixel(j, i+1, func_color);
-        m_img->set_pixel(j, i-1, func_color);
       }
     }
   }
