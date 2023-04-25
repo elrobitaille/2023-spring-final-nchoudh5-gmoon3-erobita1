@@ -1,3 +1,66 @@
+commit 064bbdca978fe7dbd6f78fdf3e8877c18a04833d
+Merge: 93f21d5 668caa6
+Author: Sun Moon <gmoon3@jhu.edu>
+Date:   Mon Apr 24 19:41:16 2023 -0400
+
+    Added erorr handling to reader
+
+commit 93f21d5ee10dd800a99b971323ae7b90c85568ed
+Author: Sun Moon <gmoon3@jhu.edu>
+Date:   Mon Apr 24 19:40:21 2023 -0400
+
+    Added error handling on reader to account for arguments
+
+commit 668caa64cf6cfaf9059fa2f5a9d65f9fcc67cd5f
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Mon Apr 24 19:31:42 2023 -0400
+
+    More warning fixing
+
+commit 0da023d8c9794e6803cd96992523bb98db1e864b
+Merge: 985783a 17b5714
+Author: Sun Moon <gmoon3@jhu.edu>
+Date:   Mon Apr 24 19:28:52 2023 -0400
+
+    ADded error handling to readeR
+
+commit 985783ab71b1f84761f394088d88c243c54db7bb
+Author: Sun Moon <gmoon3@jhu.edu>
+Date:   Mon Apr 24 19:28:15 2023 -0400
+
+    Made error handling on reader
+
+commit 17b5714624c3df262ab32e8fd232d016be74ed2b
+Author: Edgar Robitaille <erobita1@jh.edu>
+Date:   Mon Apr 24 19:19:54 2023 -0400
+
+    Fixed warning issues
+
+commit 39671a25e0f1e309be3f6ba27bb5407bb50feef5
+Author: Nikhil Choudhary <nikhilch@outlook.com>
+Date:   Mon Apr 24 19:17:36 2023 -0400
+
+    Fixed merge
+
+commit b56e5004a9e034f5bf5134f099187f04eb720117
+Merge: 1ec8ac2 06bfeeb
+Author: Sun Moon <gmoon3@jhu.edu>
+Date:   Mon Apr 24 19:02:20 2023 -0400
+
+    Did README
+
+commit 1ec8ac29071b3ff4f76fac92c90d178da76e2049
+Author: Sun Moon <gmoon3@jhu.edu>
+Date:   Mon Apr 24 19:01:36 2023 -0400
+
+    Added to readme
+
+commit 06bfeeb803346078843c76ffe6e6ef4c89deee44
+Author: Nikhil Choudhary <nikhilch@outlook.com>
+Date:   Mon Apr 24 18:48:31 2023 -0400
+
+    Added error handling for color
+
 commit 462251a89b0a7f8d0ea6bf9347c43f31729b9125
 Author: Edgar Robitaille <erobita1@jh.edu>
 Date:   Mon Apr 24 18:10:14 2023 -0400
