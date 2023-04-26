@@ -6,12 +6,12 @@
 
 class PlotException : public std::runtime_error {
 public:
+  // Constructor for PlotException
   PlotException(const std::string &msg);
+  // Copy Constructor for PlotException
   PlotException(const PlotException &other);
+  // Destructor for PlotException 
   ~PlotException();
-
-  // note that the compiler generates the copy constuctor and
-  // assignment operator
 };
 
 #endif // EXCEPTION_H
