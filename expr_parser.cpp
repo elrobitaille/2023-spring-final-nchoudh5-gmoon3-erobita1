@@ -99,6 +99,13 @@ Expr* parsePfxExpr(deque<string>& tokens) {
       result->addChild(arg);
     }
 
+    //Error handling for number of operands 
+    if ((n == "+" || n == "-" || n == "*" || n == "/") && result->numChildren() == 0) {
+      throw PlotException("Operators require at least one operand");
+    } else if ((n == "-" || n == "/") && result->numChildren() != 2) {
+      throw PlotException("Subtraction and division require exactly two operands");
+    }
+
     if (tokens.empty()) {
       throw PlotException("Missing right parenthesis");
     }

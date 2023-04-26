@@ -115,6 +115,6 @@ void Reader::read_input(std::istream &in, Plot &plot) {
     } 
     else {
       throw PlotException("Invalid command");
-   }
+    }
   }
 }

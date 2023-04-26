@@ -1,3 +1,15 @@
+commit 7c26f6f57fbda7cd38085a231b529aa16ff6b4cf
+Author: Nikhil Choudhary <nikhilch@outlook.com>
+Date:   Tue Apr 25 21:32:40 2023 -0400
+
+    Added error handling for directives that require numerical inputs
+
+commit 8b6d27a33bc302bbbfae10af405ae14fe5c62fc9
+Author: Nikhil Choudhary <nikhilch@outlook.com>
+Date:   Mon Apr 24 21:01:08 2023 -0400
+
+    Reverted to older version that is functional
+
 commit 064bbdca978fe7dbd6f78fdf3e8877c18a04833d
 Merge: 93f21d5 668caa6
 Author: Sun Moon <gmoon3@jhu.edu>
