@@ -28,14 +28,18 @@ void Reader::read_input(std::istream &in, Plot &plot) {
     iss >> command;
     if (command == "Plot") {
       double x_min, x_max, y_min, y_max;
-      iss >> x_min >> y_min >> x_max >> y_max;
+      if(!(iss >> x_min >> y_min >> x_max >> y_max)) {
+        throw PlotException("Failed to read bound values");
+      }
       if (x_min >= x_max || y_min >= y_max) {
         throw PlotException("Invalid bounds");
       }
       plot.set_bound(Bounds(x_min, x_max, y_min, y_max));
 
       int width, height;
-      iss >> width >> height;
+      if(!(iss >> width >> height)) {
+        throw PlotException("Failed to image width and height");
+      }
       if (width <= 0 || height <= 0) {
         throw PlotException("Invalid image size");
       }
@@ -44,8 +48,11 @@ void Reader::read_input(std::istream &in, Plot &plot) {
     } 
     else if (command == "Color") {
       std::string fn_name;
-      int r, g, b;
-      iss >> fn_name >> r >> g >> b;
+      int r = -1, g = -1, b = -1;
+      iss >> fn_name;
+      if (!(iss >> r >> g >> b)) {
+        throw PlotException("Failed to read color values");
+      }
       if (r > 255 || g > 255 || b > 255) {
         throw PlotException("Invalid color");
       }
@@ -59,7 +66,9 @@ void Reader::read_input(std::istream &in, Plot &plot) {
    else if (command == "Function") {
       string fn_name;
       string expr;
-      iss >> fn_name;
+      if (!(iss >> fn_name)) {
+        throw PlotException("Failed to read function name");
+      }
       getline(iss, expr);
       expr.erase(0, expr.find_first_not_of(" \t")); // Removes leading spaces and tabs, avoids core dump
       std::istringstream expr_stream(expr);
@@ -68,21 +77,28 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       plot.add_function(function);
     }
 
-    else if (command == "FillAbove" || command == "FillBelow" || command == "FillBetween") {
+   else if (command == "FillAbove" || command == "FillBelow" || command == "FillBetween") {
       std::string fn_name1;
       std::string fn_name2; // only used for FillBetween
       double opacity;
       int r, g, b;
       if (command == "FillBetween") {
-        iss >> fn_name1 >> fn_name2 >> opacity >> r >> g >> b;
+        if (!(iss >> fn_name1 >> fn_name2 >> opacity >> r >> g >> b)) {
+          throw PlotException("Failed to read FillBetween values");
+        }
       } else {
-        iss >> fn_name1 >> opacity >> r >> g >> b;
+        if (!(iss >> fn_name1 >> opacity >> r >> g >> b)) {
+          throw PlotException("Failed to read FillAbove or FillBelow values");
+        }
       }
-      
+      // Check for errors after reading values
       if (opacity < 0 || opacity > 1) {
         throw PlotException("Invalid opacity");
       }
       if (r > 255 || g > 255 || b > 255) {
+        throw PlotException("Invalid color");
+      }
+      else if (r < 0 || g < 0 || b < 0) {
         throw PlotException("Invalid color");
       }
       Color color(r, g, b);

@@ -146,6 +146,7 @@ void Renderer::renderFunctions() {
   for (const Function* func : m_plot.get_functions()) {
     // If a color value for the function was specified, use that color
     std::map<std::string, Color>::const_iterator func_color_iter = m_plot.get_colors().find(func->get_name());
+    
     Color func_color(255, 255, 255);
     if (func_color_iter != m_plot.get_colors().end()) {
         func_color = func_color_iter->second;

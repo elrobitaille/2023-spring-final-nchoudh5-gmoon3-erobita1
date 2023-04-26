@@ -9,6 +9,7 @@
 #include "expr_parser.h"
 
 using std::string;
+using std::deque;
 
 ExprParser::ExprParser() {
 }
@@ -16,7 +17,7 @@ ExprParser::ExprParser() {
 ExprParser::~ExprParser() {
 }
 
-bool is_numeric(const std::string& str) {
+bool is_numeric(const string& str) {
   for (char c : str) {
     if (!isdigit(c) && c != '.') {
       return false;
@@ -25,12 +26,12 @@ bool is_numeric(const std::string& str) {
   return !str.empty();
 }
 
-Expr* parsePfxExpr(std::deque<std::string>& tokens) {
+Expr* parsePfxExpr(deque<string>& tokens) {
   if (tokens.empty()) {
     throw PlotException("Empty");
   }
 
-  std::string n = tokens.front();
+  string n = tokens.front();
   tokens.pop_front();
 
   if (n == "x" || n == "pi" || is_numeric(n)) {
@@ -119,14 +120,14 @@ Expr* ExprParser::parse(std::istream& in) {
   // which parses the tokens and returns a pointer to an Expr object
   // representing the parsed expression.
 
-  std::deque<std::string> tokens;
-  std::string token;
+  deque<string> tokens;
+  string token;
 
   while (in >> token) {
     tokens.push_back(token);
   }
 
-  std::deque<std::string> tokenDeque(tokens.begin(), tokens.end());
+  deque<string> tokenDeque(tokens.begin(), tokens.end());
   Expr* parsedExpr = parsePfxExpr(tokenDeque);
 
   return parsedExpr;
