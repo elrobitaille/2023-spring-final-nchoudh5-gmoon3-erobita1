@@ -47,6 +47,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
     if (command == "Plot") {
       // Read the bound values for the plot
       double x_min, x_max, y_min, y_max;
+       // Throw exception if unable to read arguments
       if(!(iss >> x_min >> y_min >> x_max >> y_max)) {
         throw PlotException("Failed to read bound values");
       }
@@ -60,11 +61,13 @@ void Reader::read_input(std::istream &in, Plot &plot) {
 
       // Get the image width and height 
       int width, height;
+      // Throw exception if unable to read arguments
       if(!(iss >> width >> height)) {
         throw PlotException("Failed to image width and height");
       }
 
       int num_args;
+       // Throw exception if there are too many arguments
       if (iss >> num_args) {
         throw PlotException("Too many arguments");
       }
@@ -81,11 +84,14 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       std::string fn_name;
       int r = -1, g = -1, b = -1;
       iss >> fn_name;
+       // Check if it is a valid function name 
       validate_function_names(plot, fn_name, "");
+       // Throw exception if unable to read arguments
       if (!(iss >> r >> g >> b)) {
         throw PlotException("Failed to read color values");
       }
       int num_args_1;
+       // Throw exception if too many arguments are provided 
       if (iss >> num_args_1) {
         throw PlotException("Invalid number of arguments to Color directive");
       }
@@ -106,6 +112,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       // Read function name and expression 
       string fn_name;
       string expr;
+       // Throw exception if unable to read arguments
       if (!(iss >> fn_name)) {
         throw PlotException("Failed to read function name");
       }
@@ -139,14 +146,17 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       double opacity;
       int r, g, b;
       if (command == "FillBetween") {
+         // Throw exception if unable to read arguments
         if (!(iss >> fn_name1 >> fn_name2 >> opacity >> r >> g >> b)) {
           throw PlotException("Failed to read FillBetween values");
         }
       } else {
+         // Throw exception if unable to read arguments
         if (!(iss >> fn_name1 >> opacity >> r >> g >> b)) {
           throw PlotException("Failed to read FillAbove or FillBelow values");
         }
       }
+       // Throw exception if too many arguments are provided
       int num_args_2;
       if (iss >> num_args_2) {
         throw PlotException("Invalid number of arguments to Fill directive");
@@ -164,14 +174,17 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       Color color(r, g, b);
       // Check for fill type and fill the plot accordingly 
       if (command == "FillAbove") {
+        // Throw exception if invalid function name provided
         validate_function_names(plot, fn_name1, "");
         Fill* fill = new Fill(FillType::ABOVE, fn_name1, opacity, color);
         plot.add_fill(fill);
       } else if (command == "FillBelow") {
+        // Throw exception if invalid function name provided
         validate_function_names(plot, fn_name1, "");
         Fill* fill = new Fill(FillType::BELOW, fn_name1, opacity, color);
         plot.add_fill(fill);
       } else if (command == "FillBetween") {
+        // Throw exception if invalid function name provided
         validate_function_names(plot, fn_name1, fn_name2);
         Fill* fill = new Fill(FillType::BETWEEN, fn_name1, fn_name2, opacity, color);
         plot.add_fill(fill);
