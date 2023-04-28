@@ -8,23 +8,34 @@
 #include <deque>
 #include "expr.h"
 
-
+/**
+ * @class ExprParser
+ * @brief Expression parser that reads and parses mathematical expressions from an input stream.
+ */
 class ExprParser {
 private:
-  // Declare copy constructor for ExprParser and assignment operator
-  // value semantics are prohibited
+  // Prohibit value semantics by declaring copy constructor and assignment operator as private
   ExprParser(const ExprParser &);
   ExprParser &operator=(const ExprParser &);
+
+  // Helper function that parses expressions in prefix notation from a deque of tokens
   Expr* parsePfxExpr(std::deque<std::string>& tokens);
+
   // Helper function to check if a string is numeric
   bool is_numeric(const std::string& str);
 
 public:
-  // Default Constructor for ExprParser
+  // Default constructor for ExprParser
   ExprParser();
+
   // Destructor for ExprParser
   ~ExprParser();
-  // Parse function that reads expression from input stream 
+
+  /**
+   * @brief Parses a mathematical expression from the given input stream.
+   * @param in The input stream from which the expression is read.
+   * @return A pointer to the root of the parsed expression tree.
+   */
   Expr *parse(std::istream &in);
 };
 
