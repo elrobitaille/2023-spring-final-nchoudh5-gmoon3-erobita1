@@ -70,7 +70,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       }
       // Make sure image size is valid
       if (width <= 0 || height <= 0) {
-        throw PlotException("Invalid image size");
+        throw PlotException("Invalid number of arguments to Plot directive");
       }
       // Set the image width and height 
       plot.set_width(width);
@@ -87,7 +87,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       }
       int num_args_1;
       if (iss >> num_args_1) {
-        throw PlotException("Too many arguments");
+        throw PlotException("Invalid number of arguments to Color directive");
       }
       // Check that the color values are valid
       if (r > 255 || g > 255 || b > 255) {
@@ -114,6 +114,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       // Removes leading spaces and tabs, avoids core dump
       expr.erase(0, expr.find_first_not_of(" \t")); 
       std::istringstream expr_stream(expr);
+
       ExprParser parser;
       // Parse the expression and create a new Function object
       Function* function = new Function(fn_name, parser.parse(expr_stream));
@@ -137,7 +138,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       }
       int num_args_2;
       if (iss >> num_args_2) {
-        throw PlotException("Too many arguments");
+        throw PlotException("Invalid number of arguments to Fill directive");
       }
       // Check for errors after reading values like opacity and rgb 
       if (opacity < 0 || opacity > 1) {

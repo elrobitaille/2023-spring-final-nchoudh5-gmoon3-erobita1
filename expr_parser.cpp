@@ -158,6 +158,9 @@ Expr* ExprParser::parse(std::istream& in) {
   deque<string> tokenDeque(tokens.begin(), tokens.end());
   // Calls helper function to parse expression and returns the parsed expression 
   Expr* parsedExpr = parsePfxExpr(tokenDeque);
+  if (!(tokenDeque.empty())) {
+    throw PlotException("Invalid arguments to expression");
+  }
 
   return parsedExpr;
 }
