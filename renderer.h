@@ -15,6 +15,7 @@ private:
   Renderer(const Renderer &);
   Renderer &operator=(const Renderer &);
 
+  // Function and helper function declarations
   void draw_pixel(int x, int y, Color &func_color);
   void renderFills();
   void renderFunctions();
@@ -25,6 +26,7 @@ private:
   bool is_valid_fill(const Fill* fill, double x, double y);
 
 public:
+  // Non-default constructor and destructor 
   Renderer(const Plot &plot);
   ~Renderer();
 

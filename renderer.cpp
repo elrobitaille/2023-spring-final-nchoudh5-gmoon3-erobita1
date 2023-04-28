@@ -29,7 +29,6 @@ Image *Renderer::render() {
   std::unique_ptr<Image> img(new Image(width, height));
   m_img = img.get();
 
-  // TODO: render the plot image
   // 1. fill the background
   // 2. render the functions
   // 3. render the fills
@@ -65,7 +64,9 @@ int Renderer::find_pixel_row(int j, const Expr *f, double x_min, double x_max, d
   return i;
 }
 
+// Returns pointer to the function with the given name or nullptr
 const Function* Renderer::get_func_name(const std::string& name) {
+    // Loop through the functions and if the name matches, get the name 
     for (const Function* func : m_plot.get_functions()) {
         if (func->get_name() == name) {
             return func;
@@ -74,13 +75,17 @@ const Function* Renderer::get_func_name(const std::string& name) {
     return nullptr;
 }
 
+// Checks if a given fill is valid for a point (x,y)
 bool Renderer::is_valid_fill(const Fill* fill, double x, double y) {
+  // Grab the first function and make sure that it is valid
   const Function* func1 = get_func_name(fill->get_fn_name1());
   if (func1 == nullptr) {
       return false;
   }
+  // Get y-value of the function at point x
   double func1_value = func1->get_expr()->eval(x);
 
+  // Check fill type and compare with y value based on type
   if (fill->get_fill_type() == FillType::ABOVE) {
     return y >= func1_value;
   } else if (fill->get_fill_type() == FillType::BELOW) {
@@ -90,14 +95,16 @@ bool Renderer::is_valid_fill(const Fill* fill, double x, double y) {
     if (func2 == nullptr) {
       return false;
     }
+    // Get y-value of function again
     double func2_value = func2->get_expr()->eval(x);
     return (y >= func1_value && y <= func2_value) || (y <= func1_value && y >= func2_value);
     }
 
-  return false;
+  return false; // None of the conditions are met
 }
 
 void Renderer::renderFills() { 
+  // Grab width/height and plot bounds
   int width = m_img->get_width();
   int height = m_img->get_height();
   Bounds plot_bounds = m_plot.get_bound();
@@ -106,6 +113,7 @@ void Renderer::renderFills() {
   double y_min = plot_bounds.get_ymin();
   double y_max = plot_bounds.get_ymax();
 
+  // Loop through plot and pixels, while converting pixels to xy coords
   for (const Fill* fill : m_plot.get_fills()) {
     for (int i = 0; i < height; ++i) {
       for (int j = 0; j < width; ++j) {
@@ -113,9 +121,11 @@ void Renderer::renderFills() {
         double x = xy.first;
         double y = xy.second;
 
+        // Make sure the pixel is inside fill area 
         bool in_fill_area = is_valid_fill(fill, x, y);
 
         if (in_fill_area) {
+          // Blend the fill color with the original color of pixel
           Color original_color = m_img->get_pixel(j, i);
           Color blended_color = color_blend(original_color, fill->get_color(), fill->get_opacity());
           m_img->set_pixel(j, i, blended_color);
@@ -125,9 +135,12 @@ void Renderer::renderFills() {
   }
 }
 
+// Helper function that draws a pixel of given color at the location given 
 void Renderer::draw_pixel(int x, int y, Color &func_color) {
+  // Get width and height 
   int width = m_img->get_width();
   int height = m_img->get_height();
+  // Check that it is within image bounds and set pixel to that location
   if (x >= 0 && x < width && y >=0 && y < height) {
     m_img -> set_pixel(x, y, func_color);
   }
