@@ -4,12 +4,18 @@ Sun Moon - gmoon3
 Nikhil Choudhary - nchoudh5
 
 DESIGN 
+The program is designed to parse and evaluate mathematical expressions specified in a prefix notation, create and manipulate plots, and generate a corresponding SVG file in an efficient manner. The program is organized into several classes and components that interact with each other to provide the desired functionality. The general flow of the program is as follows: 
+1. Parse input file using read_input to create Directive objects.
+2. Process the directives, updating the Plot object as needed.
+3. For each Function directive, parse the mathematical expression using ExprParser, creating an expression tree.
+4. Evaluate and plot the functions using the Plot class and the expression trees.
+5. Generate the png output based on the plot configuration.
 
 COMPLETENESS
 The solution is completely functional 
 
 
-blah blah blah 
+
 invalid plot directives in plot input file, such as wrong number of arguments to a directive, or invalid arguments to a directive, for example
 invalid plot bound (e.g., xmin is not less than xmax)
 invalid image dimensions (e.g., width is not positive)
