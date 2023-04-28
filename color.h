@@ -7,14 +7,21 @@
 #include <cstdint>
 #include <cassert>
 
+/**
+ * @struct Color
+ * @brief Represents a color using RGB (red, green, blue) values.
+ */
 struct Color {
-  // RGB values: red, green, and blue parts of color, each is an 8-bit unsigned integer [0, 255]
   uint8_t r, g, b;
 
-  // Constructor for Color struct, initializes color components with provided values or zero if not provided 
+  /**
+   * @brief Constructor for the Color struct.
+   * Initializes color components with provided values, or zero if not provided.
+   * @param r The red component of the color [0, 255].
+   * @param g The green component of the color [0, 255].
+   * @param b The blue component of the color [0, 255].
+   */
   Color(uint8_t r = 0, uint8_t g = 0, uint8_t b = 0) : r(r), g(g), b(b) { }
 };
-
-
 
 #endif // COLOR_H
