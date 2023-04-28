@@ -14,4 +14,4 @@ The program is designed to parse and evaluate mathematical expressions specified
 The use of object oriented programming allowed for a modular design that is easily extensible and maintainable. It also allows for the easy use of new derived classes for expressions and directives. 
 
 COMPLETENESS:
-The solution is completely functional 
+The solution is completely functional. 
