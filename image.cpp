@@ -6,7 +6,7 @@
 #include "image.h"
 
 namespace {
-
+// intialize pnglite
 struct InitializePnglite {
   InitializePnglite() {
     ::png_init(0, 0);
@@ -14,7 +14,7 @@ struct InitializePnglite {
 };
 
 InitializePnglite init_pnglite;
-
+// write output data
 unsigned ostream_png_write_callback(void* input, size_t size, size_t numel, void* user_pointer) {
   std::ostream &out = *(reinterpret_cast<std::ostream *>(user_pointer));
   out.write(reinterpret_cast<const char *>(input), size * numel);

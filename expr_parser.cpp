@@ -136,7 +136,7 @@ Expr* ExprParser::parsePfxExpr(deque<string>& tokens) {
     tokens.pop_front();
     return result;
   }
-  // If not x, pi, natural number 
+  // If not x, pi, or literal number 
   else {
     throw PlotException("Unexpected token");
   }
