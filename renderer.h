@@ -41,8 +41,6 @@ private:
   bool is_valid_fill(const Fill* fill, double x, double y); 
 
 public:
-
-public:
   /**
    * @brief Non-default constructor for the Renderer class.
    * @param plot Reference to the Plot object to be rendered.
