@@ -109,6 +109,17 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       if (!(iss >> fn_name)) {
         throw PlotException("Failed to read function name");
       }
+
+      // Check if the function name is empty
+      if (fn_name.empty()) {
+        throw PlotException("Function name cannot be empty");
+      }
+
+      // Check if function name already exists 
+      if (plot.has_function(fn_name)) {
+        throw PlotException("Function already exists");
+      }
+
       // Read expression from rest of line 
       getline(iss, expr);
       // Removes leading spaces and tabs, avoids core dump
