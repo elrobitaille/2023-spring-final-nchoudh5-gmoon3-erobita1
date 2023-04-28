@@ -9,9 +9,6 @@
 #include "renderer.h"
 #include "color.h"
 
-//#define DEBUG_FILL
-//#define DEBUG_PLOT
-
 Renderer::Renderer(const Plot &plot)
   : m_plot(plot)
   , m_img(nullptr) {

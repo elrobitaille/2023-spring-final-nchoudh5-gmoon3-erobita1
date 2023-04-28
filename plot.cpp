@@ -9,8 +9,6 @@ Plot::Plot() {
   bound_ = Bounds();
   width_ = 0;
   height_ = 0; 
-
-
 }
 
 Plot::~Plot() {
