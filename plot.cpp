@@ -24,13 +24,16 @@ Plot::~Plot() {
   }
 }
 
+// Adds color to plot
 void Plot::add_color(const std::string& name, const Color& color) {
+    // Prevents more than one Color directive for a function
     if (colors_.find(name) != colors_.end()) {
       throw PlotException("Color with the same name already exists");
     }
     colors_[name] = color;
 }
 
+// Checks if function has been added to plot 
 bool Plot::has_function(const std::string &fn_name) const {
   for (std::vector<Function *>::const_iterator it = functions_.begin(); it != functions_.end(); ++it) {
     if ((*it)->get_name() == fn_name) {

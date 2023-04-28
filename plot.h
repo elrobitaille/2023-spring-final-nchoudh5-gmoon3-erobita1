@@ -15,6 +15,10 @@
 
 class Fill; 
 
+/**
+ * @class Plot
+ * @brief Class representing a plot with a set of functions, fills, and colors.
+ */
 class Plot {
 private:
   Bounds bound_;
@@ -24,11 +28,19 @@ private:
   std::vector<Fill*> fills_;
   std::map<std::string, Color> colors_;
 
+  // Copy constructor and assignment operator are prohibited
   Plot(const Plot&);
   Plot& operator=(const Plot&);
 
 public:
+  /**
+   * @brief Default constructor for the Plot class.
+   */
   Plot();
+
+  /**
+   * @brief Destructor for the Plot class.
+   */
   ~Plot();
 
   // Getter and setter for bound_
@@ -54,7 +66,7 @@ public:
   // Getter and setter for colors_
   void add_color(const std::string& name, const Color& color);
 
-  //Checks if function name is valid 
+  // Checks if function name is valid 
   bool has_function(const std::string &fn_name) const;
 
   const std::map<std::string, Color>& get_colors() const { return colors_; }
