@@ -7,6 +7,7 @@
 
 class Image {
 private:
+  // Define private fields 
   int m_width, m_height;
   Color *m_pixels;
 
@@ -15,17 +16,16 @@ private:
   Image &operator=(const Image &);
 
 public:
+  // Default constructor and destructor 
   Image(int width, int height);
   ~Image();
 
+  // Define getters and setters for width, height, and pixels
   int get_width() const { return m_width; }
   int get_height() const { return m_height; }
 
-  // TODO: add member function to access pixel Color data
   void set_pixel(int x, int y, const Color &color);
-
   Color get_pixel(int x, int y) const;
-
   const Color* get_pixels() const {return m_pixels;}
 
   void write_png(std::ostream &out);

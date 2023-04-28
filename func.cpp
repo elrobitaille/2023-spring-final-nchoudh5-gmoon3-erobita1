@@ -1,11 +1,12 @@
 #include "func.h"
 
+ // Constructor for function class that takes name and expression expr
 Function::Function(const std::string &name, Expr *expr)
   : m_name(name)
   , m_expr(expr) {
 }
-
+  
 Function::~Function() {
-  // TODO: deallocate objects if necessary
+  // Deallocate the memory allocated for m_expr pointer
   delete m_expr;
 }
