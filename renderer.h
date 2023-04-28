@@ -7,32 +7,57 @@
 #include "plot.h"
 #include "image.h"
 
+/**
+ * @class Renderer
+ * @brief Class responsible for rendering the plot and its components, such as fills and functions.
+ */
 class Renderer {
 private:
-  // it's convenient to have these as fields, to avoid the need
-  // to pass them explicitly to helper functions
+  // Fields to store a reference to the Plot object and a pointer to the Image object
   const Plot &m_plot;
   Image *m_img;
 
-  // value semantics prohibited
+  // Prohibit value semantics
   Renderer(const Renderer &);
   Renderer &operator=(const Renderer &);
 
-  // Function and helper function declarations
-  void draw_pixel(int x, int y, Color &func_color);
+  // Helper functions declarations
+
+  // Draws a pixel of given color at the specified location
+  void draw_pixel(int x, int y, Color &func_color); 
+  // Renders fill areas on the plot
   void renderFills();
-  void renderFunctions();
-  Color color_blend(const Color& orig, const Color& fill, double alpha);
-  std::pair<double, double> pixel_to_XY(int i, int j, double x_min, double x_max, double y_min, double y_max, int width, int height);
-  int find_pixel_row(int j, const Expr *f, double x_min, double x_max, double y_min, double y_max, int width, int height);
-  const Function* get_func_name(const std::string& name);
-  bool is_valid_fill(const Fill* fill, double x, double y);
+  // Renders functions on the plot 
+  void renderFunctions(); 
+  // Blends two colors based on alpha value
+  Color color_blend(const Color& orig, const Color& fill, double alpha); 
+  // Converts pixel indices to corresponding x, y coordinates
+  std::pair<double, double> pixel_to_XY(int i, int j, double x_min, double x_max, double y_min, double y_max, int width, int height); 
+  // Finds the pixel row for a given function and column index
+  int find_pixel_row(int j, const Expr *f, double x_min, double x_max, double y_min, double y_max, int width, int height); 
+  // Returns a pointer to the function with the given name, or nullptr if not found
+  const Function* get_func_name(const std::string& name); 
+  // Checks if a given fill is valid for a point (x, y)
+  bool is_valid_fill(const Fill* fill, double x, double y); 
 
 public:
-  // Non-default constructor and destructor 
+
+public:
+  /**
+   * @brief Non-default constructor for the Renderer class.
+   * @param plot Reference to the Plot object to be rendered.
+   */
   Renderer(const Plot &plot);
+
+  /**
+   * @brief Destructor for the Renderer class.
+   */
   ~Renderer();
 
+  /**
+   * @brief Renders the plot and its components to an Image object.
+   * @return Pointer to the rendered Image object.
+   */
   Image *render();
 
 };
