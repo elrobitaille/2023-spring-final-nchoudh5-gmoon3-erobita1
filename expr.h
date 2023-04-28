@@ -8,7 +8,10 @@
 #include <cmath>
 #include <vector>
 
-// Base expression class
+/**
+ * @class Expr
+ * @brief Base expression class representing mathematical expressions.
+ */
 class Expr {
 private:
   // Field to store links to child Expr nodes
@@ -22,15 +25,23 @@ public:
   Expr();
   virtual ~Expr();
 
+  /**
+   * @brief Evaluate the expression with the given value of x.
+   * @param x The value of x to evaluate the expression with.
+   * @return The result of the evaluated expression.
+   */
   virtual double eval(double x) const = 0;
 
-  // Add member functions
+  // Member functions for managing child expressions
   void addChild(Expr* child) { children.push_back(child); }
   Expr* getChild(size_t i) const { return children[i]; }
   size_t numChildren() const { return children.size(); }
 };
 
-// Derived expression classes
+/**
+ * @class AddExpr
+ * @brief Derived class representing addition expressions.
+ */
 class AddExpr : public Expr {
 public:
   // Constructor
@@ -43,6 +54,10 @@ public:
   virtual double eval(double x) const;
 };
 
+/**
+ * @class SubExpr
+ * @brief Derived class representing subtraction expressions.
+ */
 class SubExpr : public Expr {
 public:
   // Constructor
@@ -55,6 +70,10 @@ public:
   virtual double eval(double x) const;
 };
 
+/**
+ * @class MultExpr
+ * @brief Derived class representing multiplication expressions.
+ */
 class MultExpr : public Expr {
 public:
   // Constructor
@@ -67,6 +86,10 @@ public:
   virtual double eval(double x) const;
 };
 
+/**
+ * @class DivExpr
+ * @brief Derived class representing division expressions.
+ */
 class DivExpr : public Expr {
 public:
   // Constructor
@@ -79,7 +102,10 @@ public:
   virtual double eval(double x) const;
 };
 
-// X class
+/**
+ * @class X
+ * @brief Class representing the variable x in expressions.
+ */
 class X : public Expr {
 public:
   X() {}
@@ -89,7 +115,10 @@ public:
   }
 };
 
-// Pi class
+/**
+ * @class Pi
+ * @brief Class representing the constant pi in expressions.
+ */
 class Pi : public Expr {
 public:
   Pi() {}
@@ -97,7 +126,10 @@ public:
   virtual double eval(double x) const;
 };
 
-// LiteralNumber class
+/**
+ * @class LiteralNumber
+ * @brief Class representing a constant number in expressions.
+ */
 class LiteralNumber : public Expr {
 private:
   double m_value;
@@ -108,7 +140,10 @@ public:
   virtual double eval(double x) const;
 };
 
-// Sin class
+/**
+ * @class Sin
+ * @brief Class representing the sine function in expressions.
+ */
 class Sin : public Expr {
 private:
   Expr *m_arg;
@@ -121,11 +156,14 @@ public:
   }
 
   virtual double eval(double x) const;
-  
+
   virtual void addChild(Expr* expr);
 };
 
-// Cos class
+/**
+ * @class Cos
+ * @brief Class representing the cosine function in expressions.
+ */
 class Cos : public Expr {
 private:
   Expr *m_arg;

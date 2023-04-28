@@ -81,7 +81,6 @@ double Sin::eval(double x) const {
   return std::sin(m_arg->eval(x));
 }
 
-
 void Sin::addChild(Expr* expr) {
   // Check to make sure only one argument is provided 
   if (m_arg != nullptr) {
