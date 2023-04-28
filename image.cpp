@@ -30,28 +30,25 @@ Image::Image(int width, int height)
   : m_width(width)
   , m_height(height)
   , m_pixels(new Color[width * height]) {
-  // TODO: initialize pixel data
-  //added default constructor to color struct 
 }
 
 Image::~Image() {
-  // TODO: deallocate memory
+  // Deallocate memory
   delete[] m_pixels;
   
 }
 
-// TODO: implement member functions
-void Image::set_pixel(int x, int y, const Color &color) {
-  //set pixel at (x, y) to color
+// Set pixel at (x, y) to color
+void Image::set_pixel(int x, int y, const Color &color) {  
   m_pixels[y * m_width + x] = color;
 }
-//Get pixel at (x, y)
 
+// Get pixel at (x, y)
 Color Image::get_pixel(int x, int y) const {
+  //Check to make sure valid coordinates are provided 
   if (x < 0 || x >= m_width || y < 0 || y >= m_height) {
     throw PlotException("Invalid pixel coordinates");
   }
-  //get pixel at (x, y)
   return m_pixels[y * m_width + x];
 }
 
