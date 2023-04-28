@@ -24,7 +24,7 @@ ExprParser::~ExprParser() {
 
 // Helper function used to determine if a string is numeric, true if numeric else false
 // This function helped solve an issue with the program reading "-" as a subtraction rather than negative sign 
-bool is_numeric(const string& str) {
+bool ExprParser::is_numeric(const string& str) {
   for (char c : str) {
     if (!isdigit(c) && c != '.') {
       return false;
@@ -35,7 +35,7 @@ bool is_numeric(const string& str) {
 
 // Helper function to parse expression from deque of tokens
 // Throws PlotException if any error in the input tokens
-Expr* parsePfxExpr(deque<string>& tokens) {
+Expr* ExprParser::parsePfxExpr(deque<string>& tokens) {
   // Check if there is any tokens left
   if (tokens.empty()) {
     throw PlotException("Empty");
@@ -46,9 +46,9 @@ Expr* parsePfxExpr(deque<string>& tokens) {
   tokens.pop_front();
 
   // Check if the current token is x, pi, or natural number 
-  if (n == "x" || n == "pi" || is_numeric(n)) {
+  if (n == "x" || n == "pi" || this->is_numeric(n)) {
     // If n is numeric, create LiteralNumber node with value 
-    if (is_numeric(n)) {
+    if (this->is_numeric(n)) {
       double value = std::stod(n);
       return new LiteralNumber(value);
     }

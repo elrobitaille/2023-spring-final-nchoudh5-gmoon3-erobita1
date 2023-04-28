@@ -5,7 +5,9 @@
 #define FN_PARSER_H
 
 #include <iostream>
+#include <deque>
 #include "expr.h"
+
 
 class ExprParser {
 private:
@@ -13,6 +15,7 @@ private:
   // value semantics are prohibited
   ExprParser(const ExprParser &);
   ExprParser &operator=(const ExprParser &);
+  Expr* parsePfxExpr(std::deque<std::string>& tokens);
   // Helper function to check if a string is numeric
   bool is_numeric(const std::string& str);
 
