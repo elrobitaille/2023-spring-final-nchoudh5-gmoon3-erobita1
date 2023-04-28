@@ -12,72 +12,91 @@ using std::string;
 using std::istringstream;
 using std::getline;
 
+// Constructor of the Reader class
 Reader::Reader() {
 }
 
+// Destructor of the Reader class
 Reader::~Reader() {
 }
 
 void Reader::read_input(std::istream &in, Plot &plot) {
-  // TODO: read plot input from in, add information to plot
+  // Read plot input from in, add information to plot
   std::string line;
-  //read plot input from in, add information to plot
+  // Read plot input from the input stream line by line
   while (std::getline(in, line)) {
+    // Create a stringstream from the line and read first word as command 
     istringstream iss(line);
     string command;
+    // Read the first word in the line as the command
     iss >> command;
     if (command == "Plot") {
+      // Read the bound values for the plot
       double x_min, x_max, y_min, y_max;
       if(!(iss >> x_min >> y_min >> x_max >> y_max)) {
         throw PlotException("Failed to read bound values");
       }
+      // Make sure bounds are valid 
       if (x_min >= x_max || y_min >= y_max) {
         throw PlotException("Invalid bounds");
       }
+      // Set bounds of the plot 
       plot.set_bound(Bounds(x_min, x_max, y_min, y_max));
 
+      // Get the image width and height 
       int width, height;
       if(!(iss >> width >> height)) {
         throw PlotException("Failed to image width and height");
       }
+      // Make sure image size is valid
       if (width <= 0 || height <= 0) {
         throw PlotException("Invalid image size");
       }
+      // Set the image width and height 
       plot.set_width(width);
       plot.set_height(height);
     } 
     else if (command == "Color") {
+      // Read function name and color values 
       std::string fn_name;
       int r = -1, g = -1, b = -1;
       iss >> fn_name;
       if (!(iss >> r >> g >> b)) {
         throw PlotException("Failed to read color values");
       }
+      // Check that the color values are valid
       if (r > 255 || g > 255 || b > 255) {
         throw PlotException("Invalid color");
       }
       else if (r < 0 || g < 0 || b < 0) {
         throw PlotException("Invalid color");
       }
+      // Create a Color object from the color values
       Color color(r, g, b);
+      // Add the color to the plot with the given function 
       plot.add_color(fn_name, color);
     }
 
    else if (command == "Function") {
+      // Read function name and expression 
       string fn_name;
       string expr;
       if (!(iss >> fn_name)) {
         throw PlotException("Failed to read function name");
       }
+      // Read expression from rest of line 
       getline(iss, expr);
-      expr.erase(0, expr.find_first_not_of(" \t")); // Removes leading spaces and tabs, avoids core dump
+      // Removes leading spaces and tabs, avoids core dump
+      expr.erase(0, expr.find_first_not_of(" \t")); 
       std::istringstream expr_stream(expr);
       ExprParser parser;
+      // Parse the expression and create a new Function object
       Function* function = new Function(fn_name, parser.parse(expr_stream));
       plot.add_function(function);
     }
 
    else if (command == "FillAbove" || command == "FillBelow" || command == "FillBetween") {
+      // Define functions that are input through text and other variables
       std::string fn_name1;
       std::string fn_name2; // only used for FillBetween
       double opacity;
@@ -91,7 +110,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
           throw PlotException("Failed to read FillAbove or FillBelow values");
         }
       }
-      // Check for errors after reading values
+      // Check for errors after reading values like opacity and rgb 
       if (opacity < 0 || opacity > 1) {
         throw PlotException("Invalid opacity");
       }
@@ -102,6 +121,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
         throw PlotException("Invalid color");
       }
       Color color(r, g, b);
+      // Check for fill type and fill the plot accordingly 
       if (command == "FillAbove") {
         Fill* fill = new Fill(FillType::ABOVE, fn_name1, opacity, color);
         plot.add_fill(fill);
@@ -114,6 +134,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       }
     } 
     else {
+      // Invalid command case 
       throw PlotException("Invalid command");
     }
   }

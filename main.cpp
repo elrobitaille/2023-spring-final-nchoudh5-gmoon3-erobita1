@@ -26,22 +26,24 @@ int main(int argc, char **argv) {
   }
 
   try {
-    // read the plot description
+    // Read the plot description
     Plot plot;
     Reader reader;
     reader.read_input(in, plot);
 
-    // render the plot to an Image
+    // Render the plot to an Image
     Renderer renderer(plot);
     std::unique_ptr<Image> img(renderer.render());
 
-    // write the Image as a PNG file
+    // Write the Image as a PNG file
     img->write_png(out);
     std::cout << "Wrote plot image successfully!\n";
   }
+  // Error handling to catch PlotException 
   catch (const PlotException& ex) {
     std::cerr << "Error: " << ex.what() << std::endl;
     return 1;
+  // Error handling to catch std::exception 
   }
   catch (const std::exception& ex) {
     std::cerr << "Error: " << ex.what() << std::endl;
