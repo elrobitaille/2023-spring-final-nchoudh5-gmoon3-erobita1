@@ -1,3 +1,6 @@
+// Nikhil Choudhary - nchoudh5
+// Sun Moon - gmoon3 
+// Edgar Robitaille - erobita1
 #include "bounds.h"
 
 // Default constructor setting all coordinates to 0

@@ -1,3 +1,6 @@
+// Nikhil Choudhary - nchoudh5
+// Sun Moon - gmoon3 
+// Edgar Robitaille - erobita1
 #ifndef EXPR_H
 #define EXPR_H
 

@@ -1,3 +1,6 @@
+// Nikhil Choudhary - nchoudh5
+// Sun Moon - gmoon3 
+// Edgar Robitaille - erobita1
 #include <cmath>
 #include <stdexcept>
 #include "exception.h"

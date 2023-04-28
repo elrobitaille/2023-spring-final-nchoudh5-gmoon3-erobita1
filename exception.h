@@ -1,3 +1,6 @@
+// Nikhil Choudhary - nchoudh5
+// Sun Moon - gmoon3 
+// Edgar Robitaille - erobita1
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
