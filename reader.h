@@ -19,6 +19,7 @@ public:
   // read plot description from given istream;
   // throw a PlotException if any errors are found
   void read_input(std::istream &in, Plot &plot);
+  void validate_function_names(const Plot &plot, const std::string &fn_name1, const std::string &fn_name2);
 };
 
 #endif // READER_H

@@ -23,6 +23,17 @@ Reader::Reader() {
 Reader::~Reader() {
 }
 
+// Helper function to validate function names in fill directives
+void Reader::validate_function_names(const Plot &plot, const std::string &fn_name1, const std::string &fn_name2) {
+  if (!plot.has_function(fn_name1)) {
+    throw PlotException("Function '" + fn_name1 + "' not found in plot");
+  }
+  if (!fn_name2.empty() && !plot.has_function(fn_name2)) {
+    throw PlotException("Function '" + fn_name2 + "' not found in plot");
+  }
+}
+
+
 void Reader::read_input(std::istream &in, Plot &plot) {
   // Read plot input from in, add information to plot
   std::string line;
@@ -39,6 +50,7 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       if(!(iss >> x_min >> y_min >> x_max >> y_max)) {
         throw PlotException("Failed to read bound values");
       }
+      
       // Make sure bounds are valid 
       if (x_min >= x_max || y_min >= y_max) {
         throw PlotException("Invalid bounds");
@@ -50,6 +62,11 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       int width, height;
       if(!(iss >> width >> height)) {
         throw PlotException("Failed to image width and height");
+      }
+
+      int num_args;
+      if (iss >> num_args) {
+        throw PlotException("Too many arguments");
       }
       // Make sure image size is valid
       if (width <= 0 || height <= 0) {
@@ -64,8 +81,13 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       std::string fn_name;
       int r = -1, g = -1, b = -1;
       iss >> fn_name;
+      validate_function_names(plot, fn_name, "");
       if (!(iss >> r >> g >> b)) {
         throw PlotException("Failed to read color values");
+      }
+      int num_args_1;
+      if (iss >> num_args_1) {
+        throw PlotException("Too many arguments");
       }
       // Check that the color values are valid
       if (r > 255 || g > 255 || b > 255) {
@@ -113,6 +135,10 @@ void Reader::read_input(std::istream &in, Plot &plot) {
           throw PlotException("Failed to read FillAbove or FillBelow values");
         }
       }
+      int num_args_2;
+      if (iss >> num_args_2) {
+        throw PlotException("Too many arguments");
+      }
       // Check for errors after reading values like opacity and rgb 
       if (opacity < 0 || opacity > 1) {
         throw PlotException("Invalid opacity");
@@ -126,12 +152,15 @@ void Reader::read_input(std::istream &in, Plot &plot) {
       Color color(r, g, b);
       // Check for fill type and fill the plot accordingly 
       if (command == "FillAbove") {
+        validate_function_names(plot, fn_name1, "");
         Fill* fill = new Fill(FillType::ABOVE, fn_name1, opacity, color);
         plot.add_fill(fill);
       } else if (command == "FillBelow") {
+        validate_function_names(plot, fn_name1, "");
         Fill* fill = new Fill(FillType::BELOW, fn_name1, opacity, color);
         plot.add_fill(fill);
       } else if (command == "FillBetween") {
+        validate_function_names(plot, fn_name1, fn_name2);
         Fill* fill = new Fill(FillType::BETWEEN, fn_name1, fn_name2, opacity, color);
         plot.add_fill(fill);
       }
@@ -142,3 +171,4 @@ void Reader::read_input(std::istream &in, Plot &plot) {
     }
   }
 }
+

@@ -52,12 +52,10 @@ public:
   const std::vector<Fill*>& get_fills() const { return fills_; }
 
   // Getter and setter for colors_
-  void add_color(const std::string& name, const Color& color) {
-    if (colors_.find(name) != colors_.end()) {
-      throw PlotException("Color with the same name already exists");
-    }
-    colors_[name] = color;
-  }
+  void add_color(const std::string& name, const Color& color);
+
+  //Checks if function name is valid 
+  bool has_function(const std::string &fn_name) const;
 
   const std::map<std::string, Color>& get_colors() const { return colors_; }
 };

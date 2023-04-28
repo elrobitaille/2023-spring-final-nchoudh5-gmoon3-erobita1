@@ -72,7 +72,7 @@ Expr* ExprParser::parsePfxExpr(deque<string>& tokens) {
 
     // Check that the function name is valid 
     if (n != "sin" && n != "cos" && n != "+" && n != "-" && n != "*" && n != "/") {
-      throw PlotException("Invalid function name");
+      throw PlotException("Invalid operation");
     }
 
     // Create appropriate function node based on the name

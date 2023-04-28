@@ -9,6 +9,8 @@ Plot::Plot() {
   bound_ = Bounds();
   width_ = 0;
   height_ = 0; 
+
+
 }
 
 Plot::~Plot() {
@@ -20,5 +22,21 @@ Plot::~Plot() {
   for (std::size_t i = 0; i < fills_.size(); i++) {
     delete fills_[i];
   }
+}
+
+void Plot::add_color(const std::string& name, const Color& color) {
+    if (colors_.find(name) != colors_.end()) {
+      throw PlotException("Color with the same name already exists");
+    }
+    colors_[name] = color;
+}
+
+bool Plot::has_function(const std::string &fn_name) const {
+  for (std::vector<Function *>::const_iterator it = functions_.begin(); it != functions_.end(); ++it) {
+    if ((*it)->get_name() == fn_name) {
+      return true;
+    }
+  }
+  return false;
 }
 
